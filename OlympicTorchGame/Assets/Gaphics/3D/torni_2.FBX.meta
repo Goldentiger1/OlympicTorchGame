@@ -14,7 +14,8 @@ ModelImporter:
     400006: Sphere001
     400008: //RootNode
     2100000: No Name
-    2100002: 02 - Default
+    2100002: 'Material #0'
+    2100004: 02 - Default
     2300000: Box001
     2300002: Cylinder001
     2300004: Plane001
