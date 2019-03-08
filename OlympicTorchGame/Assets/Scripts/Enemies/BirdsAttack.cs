@@ -4,15 +4,16 @@ using UnityEngine;
 
 public class BirdsAttack : MonoBehaviour
 {
-    // Start is called before the first frame update
+    public List<GameObject> EnemyBirds = new List<GameObject>();
+    public List<GameObject> EnemySpawnpoints = new List<GameObject>();
+    public GameObject AllyTorch;
+
     void Start()
     {
-        
+        AllyTorch = GameObject.Find("Olympic Torch"); 
     }
-
-    // Update is called once per frame
     void Update()
     {
-        
+
     }
 }
