@@ -4,17 +4,15 @@ using UnityEngine;
 
 public class PlayAreaScale : MonoBehaviour 
 {
-    private GameObject PlayAreaTop;
-    private GameObject PlayAreaBottom;
-    private GameObject PlayAreaPointA;
-    private GameObject PlayAreaPointB;
+    private GameObject Height;
+    private GameObject Width;
+    private GameObject Length;
     public Transform PlayAreaHeight;
     public Transform PlayAreaWidth;
 
     private void Awake()
     {
-        PlayAreaTop = GameObject.Find("PlayAreaTop");
-        PlayAreaBottom = GameObject.Find("PlayAreaBottom");
+       
 
     }
 }
