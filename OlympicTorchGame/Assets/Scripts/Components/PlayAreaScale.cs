@@ -16,7 +16,8 @@ public class PlayAreaScale : MonoBehaviour
         Length = GameObject.Find("Length");
     }
 
-    private void Start() {
-        PlayAreaSize = (Vector3.Distance()
+    private void Start()
+    {
+
     }
 }
