@@ -23,11 +23,12 @@ public class PlayAreaScale : MonoBehaviour
 
     private void Update()
     {
+        Vector3 A = SizeObjects[0].transform.GetChild(0).position;
+        Vector3 B = SizeObjects[0].transform.GetChild(1).position;
         // PlayAreaLenght
-        while(LockArea == false && PlayAreaSize.x >= 0)
+        while (LockArea == false)
         {
-             //Vector3 A = SizeObjects[0].transform.GetChild(0).position;
-            //Vector3 B = SizeObjects[0].transform.GetChild(1).position;
+
         }
     }
 }
