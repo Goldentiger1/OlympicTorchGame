@@ -25,10 +25,5 @@ public class PlayAreaScale : MonoBehaviour
     {
         Vector3 A = SizeObjects[0].transform.GetChild(0).position;
         Vector3 B = SizeObjects[0].transform.GetChild(1).position;
-        // PlayAreaLenght
-        while (LockArea == false)
-        {
-
-        }
     }
 }
