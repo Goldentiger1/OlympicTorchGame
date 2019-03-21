@@ -6,6 +6,7 @@ public class TorchIgnite : MonoBehaviour
 {
     public GameObject torch;
     public GameObject lighter;
+    public Color newColor;
 
     private void Start()
     {
@@ -13,8 +14,9 @@ public class TorchIgnite : MonoBehaviour
         lighter = GameObject.Find("Lighting Point");
     }
 
-    private void Update()
+    public void LightingOlympicFire()
     {
-        
+
     }
+
 }
