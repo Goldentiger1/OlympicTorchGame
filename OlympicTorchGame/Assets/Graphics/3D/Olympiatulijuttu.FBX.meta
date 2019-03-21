@@ -1,20 +1,49 @@
 fileFormatVersion: 2
-guid: a5081fc92b2329c4e93c8a7e812f6780
+guid: 32aa05f23c355834cad6740a1c524077
 ModelImporter:
   serializedVersion: 23
   fileIDToRecycleName:
-    100000: //RootNode
-    400000: //RootNode
-    2100000: 'Material #1'
-    2300000: //RootNode
-    3300000: //RootNode
-    4300000: Cylinder001
-  externalObjects:
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: 'Material #1'
-    second: {fileID: 2100000, guid: d0f9ca14749a0dc46be9c21e3ab85a61, type: 2}
+    100000: Alusta
+    100002: Jalka
+    100004: Jalka001
+    100006: Jalka002
+    100008: Jalka003
+    100010: Jalka004
+    100012: //RootNode
+    100014: "P\xF6ntt\xF6"
+    400000: Alusta
+    400002: Jalka
+    400004: Jalka001
+    400006: Jalka002
+    400008: Jalka003
+    400010: Jalka004
+    400012: //RootNode
+    400014: "P\xF6ntt\xF6"
+    2100000: 'Material #3'
+    2100002: 'Material #2'
+    2100004: 'Material #4'
+    2300000: Alusta
+    2300002: Jalka
+    2300004: Jalka001
+    2300006: Jalka002
+    2300008: Jalka003
+    2300010: Jalka004
+    2300012: "P\xF6ntt\xF6"
+    3300000: Alusta
+    3300002: Jalka
+    3300004: Jalka001
+    3300006: Jalka002
+    3300008: Jalka003
+    3300010: Jalka004
+    3300012: "P\xF6ntt\xF6"
+    4300000: Alusta
+    4300002: Jalka
+    4300004: "P\xF6ntt\xF6"
+    4300006: Jalka001
+    4300008: Jalka002
+    4300010: Jalka003
+    4300012: Jalka004
+  externalObjects: {}
   materials:
     importMaterials: 1
     materialName: 0
@@ -45,14 +74,14 @@ ModelImporter:
     isReadable: 1
   meshes:
     lODScreenPercentages: []
-    globalScale: 0.5
+    globalScale: 1
     meshCompression: 0
     addColliders: 0
     useSRGBMaterialColor: 1
     importVisibility: 1
     importBlendShapes: 1
-    importCameras: 0
-    importLights: 0
+    importCameras: 1
+    importLights: 1
     swapUVChannels: 0
     generateSecondaryUV: 0
     useFileUnits: 1
@@ -76,7 +105,7 @@ ModelImporter:
     legacyComputeAllNormalsFromSmoothingGroupsWhenMeshHasBlendShapes: 0
     blendShapeNormalImportMode: 1
     normalSmoothingSource: 0
-  importAnimation: 0
+  importAnimation: 1
   copyAvatar: 0
   humanDescription:
     serializedVersion: 2
