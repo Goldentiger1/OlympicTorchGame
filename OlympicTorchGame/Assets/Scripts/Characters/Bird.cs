@@ -13,12 +13,15 @@ public abstract class Bird : MonoBehaviour
 {
     #region VARIABLES
 
-    [Header("Movement variables")]
-    public float HorizontalSpeed;
-    public float VerticalSpeed;
-    public float Amplitude;
+    [Header("Movement")]
+    public float MoveSpeed = 1f;
+    public float RotationSpeed = 5f;
+    public Transform Target;
 
-    private Vector3 currentPosition;
+    [Header("Waypoints")]
+    public bool ShowWaypoints;
+    public Vector3[] Waypoints;
+    private int waypointIndex;
 
     private Animator animator;
 
@@ -49,14 +52,14 @@ public abstract class Bird : MonoBehaviour
 
     #region UNITY_FUNCTIONS
 
-    private void Awake()
+    protected virtual void Awake()
     {
         animator = GetComponentInChildren<Animator>();
     }
 
     private void Start()
     {
-        currentPosition = transform.position;
+       
     }
 
     private void Update()
@@ -69,6 +72,21 @@ public abstract class Bird : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.A))
         {
             ChangePrevious_AI_State();
+        }
+    }
+
+    private void OnDrawGizmos()
+    {
+        if (ShowWaypoints)
+        {
+            Gizmos.color = Color.red;
+
+            for (int i = 0; i < Waypoints.Length; i++)
+            {
+                var waypoint = Waypoints[i];
+                Gizmos.DrawLine(waypoint + Vector3.forward * 0.2f, waypoint + Vector3.back * 0.2f);
+                Gizmos.DrawLine(waypoint + Vector3.right * 0.2f, waypoint + Vector3.left * 0.2f);
+            }
         }
     }
 
@@ -130,6 +148,34 @@ public abstract class Bird : MonoBehaviour
         StartCoroutine(IAttack());
     }
 
+    private int GetClosestWaypoint()
+    {
+        var closestDistance = Mathf.Infinity;
+        var closestWaypointIndex = 0;
+
+        for (int i = 0; i < Waypoints.Length; i++)
+        {
+            float dist = Vector3.Distance(Waypoints[i], transform.position);
+            if (dist < closestDistance)
+            {
+                closestWaypointIndex = i;
+            }
+        }
+
+        return closestWaypointIndex;
+    }
+
+    private void Move(Vector3 target, float moveSpeed)
+    {
+        transform.position = Vector3.MoveTowards(transform.position, target, moveSpeed * Time.deltaTime);
+    }
+
+    private void Rotate(Vector3 target, float rotationSpeed)
+    {
+        var targetRotation = Quaternion.LookRotation(target - transform.position);
+        transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
+    }
+
     #endregion
 
     #region COROUTINES
@@ -146,18 +192,57 @@ public abstract class Bird : MonoBehaviour
     {
         while (Current_AI_State.Equals(AI_STATE.ROAM))
         {
-            currentPosition.x += HorizontalSpeed;
-            currentPosition.y = Mathf.Sin(VerticalSpeed * Time.realtimeSinceStartup) * Amplitude;
+            var destination = Waypoints[waypointIndex];
+
+            Move(destination, MoveSpeed);
+            Rotate(destination, RotationSpeed);
+
+            if (Vector3.Distance(transform.position, destination) <= 0.1f)
+            {
+                waypointIndex = waypointIndex == Waypoints.Length - 1 ? 0 : waypointIndex + 1;
+            }
 
             yield return null;
         }
-    }
+    }   
 
     private IEnumerator IAttack()
     {
         while (Current_AI_State.Equals(AI_STATE.ATTACK))
         {
-            animator.SetTrigger("Attack");
+            if(Target == null)
+            {
+                Target = FindObjectOfType<Torch>().transform;
+            }
+
+            var targetPosition = Target.position;
+
+            Rotate(targetPosition, RotationSpeed * 2);
+            Move(targetPosition, MoveSpeed * 2);
+
+            var distance = Vector3.Distance(transform.position, targetPosition);
+
+            if(distance <= 1f)
+            {
+                animator.SetTrigger("Attack");
+
+ 
+
+                //var foo = animator.GetCurrentAnimatorStateInfo(0).IsTag("Idle");
+                //var foo2 = animator.GetCurrentAnimatorStateInfo(0).IsTag("Attack");
+
+                //print(foo + " " + foo2);
+
+                yield return new WaitForSeconds(2f);
+                // !!!
+
+                waypointIndex = 2;
+
+                //waypointIndex = GetClosestWaypoint();
+                Change_AI_State(AI_STATE.ROAM);
+                break;
+            }
+
             yield return null;
         }       
     }
