@@ -5,9 +5,15 @@ public class UIManager : Singelton<UIManager>
 {
     [Header("Texts")]
     public TextMeshProUGUI GameTimeText;
+    public TextMeshProUGUI TorchStrenghtText;
 
-    public void UpdateGameTime(float newTime)
+    public void UpdateGameTime(float currentTime)
     {
-        GameTimeText.text = newTime.ToString();
+        GameTimeText.text = "TIME: " + currentTime.ToString();
+    }
+
+    public void UpdateTorchStrenght(float currentStrenght)
+    {
+        TorchStrenghtText.text = "TORCH STRENGHT: " + currentStrenght.ToString();
     }
 }

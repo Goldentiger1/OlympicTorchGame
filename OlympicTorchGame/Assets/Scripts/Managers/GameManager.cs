@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public enum GAME_STATE
 {
@@ -20,6 +21,14 @@ public class GameManager : Singelton<GameManager>
         private set;
     }
 
+    public int CurrentSceneIndex
+    {
+        get
+        {
+            return SceneManager.GetActiveScene().buildIndex;
+        }
+    }
+
     private void Start()
     {
         startLevelTime = LevelTime;
@@ -27,7 +36,14 @@ public class GameManager : Singelton<GameManager>
         ChangeGameState(GAME_STATE.START);
     }
 
-    private void ChangeGameState(GAME_STATE newState) 
+    private void LoadScene(int sceneIndex)
+    {
+        SceneManager.LoadScene(sceneIndex);
+
+        ChangeGameState(GAME_STATE.START);
+    }
+
+    public void ChangeGameState(GAME_STATE newState) 
     {
         CurrentGameState = newState;
 
@@ -104,6 +120,6 @@ public class GameManager : Singelton<GameManager>
 
         yield return new WaitForSeconds(4f);
 
-        ChangeGameState(GAME_STATE.START);
+        LoadScene(CurrentSceneIndex);
     }
 }
