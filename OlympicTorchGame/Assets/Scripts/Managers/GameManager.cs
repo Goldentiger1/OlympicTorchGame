@@ -11,7 +11,10 @@ public enum GAME_STATE
 
 public class GameManager : Singelton<GameManager>
 {
+    [Header("VARIABLES")]
     public float LevelTime = 60f;
+    public bool OlympicFlameStarted;
+
     private float startLevelTime;
     private bool gameIsCreated;
 
@@ -38,9 +41,7 @@ public class GameManager : Singelton<GameManager>
 
     private void LoadScene(int sceneIndex)
     {
-        SceneManager.LoadScene(sceneIndex);
-
-        ChangeGameState(GAME_STATE.START);
+        SceneManager.LoadScene(sceneIndex);     
     }
 
     public void ChangeGameState(GAME_STATE newState) 
@@ -90,6 +91,8 @@ public class GameManager : Singelton<GameManager>
 
     private IEnumerator IStart()
     {
+        OlympicFlameStarted = false;
+
         LevelTime = startLevelTime;
         UIManager.Instance.GameTimeText.text = "STARTING...";
 
@@ -104,10 +107,14 @@ public class GameManager : Singelton<GameManager>
         {
             yield return new WaitForSeconds(1f);
             LevelTime--;
-            UIManager.Instance.UpdateGameTime(LevelTime);
-         
+            UIManager.Instance.UpdateGameTime(LevelTime);        
+
             if(LevelTime <= 0)
             {
+                UIManager.Instance.GameTimeText.text = "START FIRE";
+
+                yield return new WaitUntil(() => OlympicFlameStarted);
+
                 ChangeGameState(GAME_STATE.END);
                 break;
             }
@@ -120,6 +127,8 @@ public class GameManager : Singelton<GameManager>
 
         yield return new WaitForSeconds(4f);
 
-        LoadScene(CurrentSceneIndex);
+        //LoadScene(CurrentSceneIndex);
+
+        ChangeGameState(GAME_STATE.START);
     }
 }

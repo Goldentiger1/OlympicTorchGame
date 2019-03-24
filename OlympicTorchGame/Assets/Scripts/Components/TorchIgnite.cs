@@ -23,7 +23,7 @@ public class TorchIgnite : MonoBehaviour
 
     public void LightingOlympicFire()
     {
-        rend.material.shader 
+       // rend.material.shader 
         
     }
 
