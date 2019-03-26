@@ -14,9 +14,12 @@ public class GameManager : Singelton<GameManager>
     [Header("VARIABLES")]
     public float LevelTime = 60f;
     public bool OlympicFlameStarted;
+    public bool UseVR_Player = true;
+    public bool TimeToStartFire = false;
 
     private float startLevelTime;
     private bool gameIsCreated;
+    private Camera mainCamera;
 
     public GAME_STATE CurrentGameState
     {
@@ -32,8 +35,15 @@ public class GameManager : Singelton<GameManager>
         }
     }
 
+    private void Awake() 
+    {
+        mainCamera = Camera.main;
+    }
+
     private void Start()
     {
+        mainCamera.gameObject.SetActive(!UseVR_Player);
+
         startLevelTime = LevelTime;
 
         ChangeGameState(GAME_STATE.START);
@@ -78,12 +88,26 @@ public class GameManager : Singelton<GameManager>
     {
         if (gameIsCreated == false)
         {
-            var player = Instantiate(ResourceManager.Instance.PlayerPrefab, transform);
-            player.SetActive(false);
+            // Player
+            var playerPrefab = ResourceManager.Instance.PlayerPrefab;
+            var player = Instantiate(playerPrefab, transform);
+            player.name = playerPrefab.name;
+            player.SetActive(UseVR_Player);
 
-            Instantiate(ResourceManager.Instance.BubiPrefab, transform);
-            Instantiate(ResourceManager.Instance.TorchPrefab, transform);
-            Instantiate(ResourceManager.Instance.RainEffectPrefab, transform);
+            // Bubi
+            var bubiPrefab = ResourceManager.Instance.BubiPrefab;
+            var bubi = Instantiate(bubiPrefab, transform);
+            bubi.name = bubiPrefab.name;
+
+            // Torch
+            var torchPrefab = ResourceManager.Instance.TorchPrefab;
+            var torch = Instantiate(torchPrefab, transform);
+            torch.name = torchPrefab.name;
+
+            // Rain
+            var rainEffectPrefab = ResourceManager.Instance.RainEffectPrefab;
+            var rainEffect = Instantiate(rainEffectPrefab, transform);
+            rainEffect.name = rainEffectPrefab.name;
         }     
 
         return gameIsCreated = true;
@@ -92,6 +116,7 @@ public class GameManager : Singelton<GameManager>
     private IEnumerator IStart()
     {
         OlympicFlameStarted = false;
+        TimeToStartFire = false;
 
         LevelTime = startLevelTime;
         UIManager.Instance.GameTimeText.text = "STARTING...";
@@ -111,6 +136,8 @@ public class GameManager : Singelton<GameManager>
 
             if(LevelTime <= 0)
             {
+                TimeToStartFire = true;
+
                 UIManager.Instance.GameTimeText.text = "START FIRE";
 
                 yield return new WaitUntil(() => OlympicFlameStarted);
@@ -126,8 +153,6 @@ public class GameManager : Singelton<GameManager>
         UIManager.Instance.GameTimeText.text = "GAME OVER";
 
         yield return new WaitForSeconds(4f);
-
-        //LoadScene(CurrentSceneIndex);
 
         ChangeGameState(GAME_STATE.START);
     }

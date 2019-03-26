@@ -34,6 +34,22 @@ public class Torch : MonoBehaviour
         currentBurnRate = newBurnRate;
     }
 
+    private void OnTriggerEnter(Collider other) 
+    {
+        // 11 == FirePoint layer index
+        if (other.gameObject.layer == 11) 
+        {
+            if (GameManager.Instance.OlympicFlameStarted)
+                return;
+
+            if(GameManager.Instance.TimeToStartFire)
+            GameManager.Instance.OlympicFlameStarted = true; 
+
+            GameManager.Instance.ChangeGameState(GAME_STATE.END);
+           
+        }
+    }
+
     private IEnumerator ILifeTime()
     {
         ChangeBurningRate(BaseBurnRate);
