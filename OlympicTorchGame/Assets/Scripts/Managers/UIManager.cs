@@ -9,7 +9,7 @@ public class UIManager : Singelton<UIManager>
 
     public void UpdateGameTime(float currentTime)
     {
-        GameTimeText.text = "TIME: " + currentTime.ToString();
+        GameTimeText.text = "TIME: " + currentTime.ToString("0");
     }
 
     public void UpdateTorchStrenght(float currentStrenght)

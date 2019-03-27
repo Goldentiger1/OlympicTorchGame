@@ -21,9 +21,9 @@ public abstract class Bird : MonoBehaviour
     [Header("Waypoints")]
     public bool ShowWaypoints;
     public Vector3[] Waypoints;
-    private int waypointIndex;
+    protected int waypointIndex;
 
-    private Animator animator;
+    protected Animator animator;
 
     #endregion
 
@@ -133,118 +133,51 @@ public abstract class Bird : MonoBehaviour
         Change_AI_State(Previous_AI_State);
     }
 
-    private void Idle()
+    protected virtual void Idle()
     {
-        StartCoroutine(IIdle());
+
     }
 
-    private void Roam()
+    protected virtual void Roam()
     {
-        StartCoroutine(IRoam());
+
     }
 
-    private void Attack()
+    protected virtual void Attack()
     {
-        StartCoroutine(IAttack());
+        
     }
 
-    private int GetClosestWaypoint()
+    protected void GetClosestWaypoint()
     {
+        var currentPosition = transform.position;
         var closestDistance = Mathf.Infinity;
-        var closestWaypointIndex = 0;
 
         for (int i = 0; i < Waypoints.Length; i++)
         {
-            float dist = Vector3.Distance(Waypoints[i], transform.position);
-            if (dist < closestDistance)
-            {
-                closestWaypointIndex = i;
+            var distanceToWaypoint = Vector3.Distance(currentPosition, Waypoints[i]);
+
+            //print("Distance: " + distanceToWaypoint + "  Index: " + i);
+
+            if (distanceToWaypoint < closestDistance) 
+            {     
+                closestDistance = distanceToWaypoint;
+                waypointIndex = i;              
             }
         }
 
-        return closestWaypointIndex;
+        //print("Closest index: " + waypointIndex);
     }
 
-    private void Move(Vector3 target, float moveSpeed)
+    protected void Move(Vector3 target, float moveSpeed)
     {
         transform.position = Vector3.MoveTowards(transform.position, target, moveSpeed * Time.deltaTime);
     }
 
-    private void Rotate(Vector3 target, float rotationSpeed)
+    protected void Rotate(Vector3 target, float rotationSpeed)
     {
         var targetRotation = Quaternion.LookRotation(target - transform.position);
         transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
-    }
-
-    #endregion
-
-    #region COROUTINES
-
-    private IEnumerator IIdle()
-    {
-        while (Current_AI_State.Equals(AI_STATE.IDLE))
-        {
-            yield return null;
-        }     
-    }
-
-    private IEnumerator IRoam()
-    {
-        while (Current_AI_State.Equals(AI_STATE.ROAM))
-        {
-            var destination = Waypoints[waypointIndex];
-
-            Move(destination, MoveSpeed);
-            Rotate(destination, RotationSpeed);
-
-            if (Vector3.Distance(transform.position, destination) <= 0.1f)
-            {
-                waypointIndex = waypointIndex == Waypoints.Length - 1 ? 0 : waypointIndex + 1;
-            }
-
-            yield return null;
-        }
-    }   
-
-    private IEnumerator IAttack()
-    {
-        while (Current_AI_State.Equals(AI_STATE.ATTACK))
-        {
-            if(Target == null)
-            {
-                Target = FindObjectOfType<Torch>().transform;
-            }
-
-            var targetPosition = Target.position;
-
-            Rotate(targetPosition, RotationSpeed * 2);
-            Move(targetPosition, MoveSpeed * 2);
-
-            var distance = Vector3.Distance(transform.position, targetPosition);
-
-            if(distance <= 1f)
-            {
-                animator.SetTrigger("Attack");
-
- 
-
-                //var foo = animator.GetCurrentAnimatorStateInfo(0).IsTag("Idle");
-                //var foo2 = animator.GetCurrentAnimatorStateInfo(0).IsTag("Attack");
-
-                //print(foo + " " + foo2);
-
-                yield return new WaitForSeconds(2f);
-                // !!!
-
-                waypointIndex = 2;
-
-                //waypointIndex = GetClosestWaypoint();
-                Change_AI_State(AI_STATE.ROAM);
-                break;
-            }
-
-            yield return null;
-        }       
     }
 
     #endregion

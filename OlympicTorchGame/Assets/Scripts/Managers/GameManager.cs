@@ -130,8 +130,7 @@ public class GameManager : Singelton<GameManager>
     {
         while (CurrentGameState.Equals(GAME_STATE.RUN))
         {
-            yield return new WaitForSeconds(1f);
-            LevelTime--;
+            LevelTime -= Time.deltaTime;
             UIManager.Instance.UpdateGameTime(LevelTime);        
 
             if(LevelTime <= 0)
@@ -143,8 +142,9 @@ public class GameManager : Singelton<GameManager>
                 yield return new WaitUntil(() => OlympicFlameStarted);
 
                 ChangeGameState(GAME_STATE.END);
-                break;
             }
+
+            yield return null;
         }
     }
 
