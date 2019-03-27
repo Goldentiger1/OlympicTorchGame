@@ -36,24 +36,41 @@ public class Torch : MonoBehaviour
 
     private void OnTriggerEnter(Collider other) 
     {
-        // 11 == FirePoint layer index
-        if (other.gameObject.layer == 11) 
+       
+        var foo = other.gameObject.layer;
+
+        switch (foo)
         {
-            if (GameManager.Instance.OlympicFlameStarted)
-                return;
+            // FirePoint layer index
+            case 11:
 
-            if (GameManager.Instance.TimeToStartFire)
-            {
-                GameManager.Instance.OlympicFlameStarted = true;
+                if (GameManager.Instance.OlympicFlameStarted)
+                    return;
 
-                var bigFirePrefab = ResourceManager.Instance.BigFireEffect;
+                if (GameManager.Instance.TimeToStartFire) {
+                    GameManager.Instance.OlympicFlameStarted = true;
 
-                var bigFire = Instantiate(bigFirePrefab, other.bounds.center, Quaternion.identity);
-                bigFire.name = bigFirePrefab.name;
-            }
-           
-            GameManager.Instance.ChangeGameState(GAME_STATE.END);
-           
+                    var bigFirePrefab = ResourceManager.Instance.BigFireEffect;
+
+                    var bigFire = Instantiate(bigFirePrefab, other.bounds.center, Quaternion.identity);
+                    bigFire.name = bigFirePrefab.name;
+                }
+
+                GameManager.Instance.ChangeGameState(GAME_STATE.END);
+
+                break;
+
+            // Enemy layer index
+            case 13:
+
+                print("FOOFOFOOFO");
+                ChangeBurningRate(currentBurnRate - 50f);
+
+                break;
+
+            default:
+
+                break;
         }
     }
 

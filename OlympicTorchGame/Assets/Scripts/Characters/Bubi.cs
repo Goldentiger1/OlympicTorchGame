@@ -3,6 +3,11 @@ using UnityEngine;
 
 public class Bubi : Bird
 {
+    [Header("Audio")]
+    public AudioClip AttackClip;
+
+    private AudioSource audioSource;
+
     private Vector3 destination;
 
     public bool DestinationReached 
@@ -15,7 +20,9 @@ public class Bubi : Bird
 
     protected override void Awake()
     {
-        base.Awake();      
+        base.Awake();
+
+        audioSource = GetComponent<AudioSource>();
     }
 
     private void Start() 
@@ -89,6 +96,14 @@ public class Bubi : Bird
 
     private IEnumerator IAttack()
     {
+        if(audioSource.isPlaying == false) 
+        {
+            audioSource.clip = AttackClip;
+            audioSource.volume = Random.Range(0.9f, 1.1f);
+            audioSource.pitch = Random.Range(0.9f, 1.1f);
+            audioSource.Play();
+        }
+    
         while (Current_AI_State.Equals(AI_STATE.ATTACK)) 
         {
             if (Target == null) 
