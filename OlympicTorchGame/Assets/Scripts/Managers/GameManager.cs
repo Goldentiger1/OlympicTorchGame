@@ -104,10 +104,7 @@ public class GameManager : Singelton<GameManager>
             var torch = Instantiate(torchPrefab, transform);
             torch.name = torchPrefab.name;
 
-            // Rain
-            var rainEffectPrefab = ResourceManager.Instance.RainEffectPrefab;
-            var rainEffect = Instantiate(rainEffectPrefab, transform);
-            rainEffect.name = rainEffectPrefab.name;
+            WeatherManager.Instance.StartRain();
         }     
 
         return gameIsCreated = true;

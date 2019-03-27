@@ -66,12 +66,13 @@ public abstract class Bird : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.S))
         {
-            Change_AI_State(Next_AI_STATE);
+            WeatherManager.Instance.Wind(20f, 1);
         }
 
         if (Input.GetKeyDown(KeyCode.A))
         {
-            ChangePrevious_AI_State();
+            WeatherManager.Instance.Wind(0f, 1);
+
         }
     }
 
