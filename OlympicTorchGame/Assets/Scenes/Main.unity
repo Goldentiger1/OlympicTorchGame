@@ -889,7 +889,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   LevelTime: 10
   OlympicFlameStarted: 0
-  UseVR_Player: 0
+  UseVR_Player: 1
   TimeToStartFire: 0
 --- !u!1001 &1584292572
 PrefabInstance:
@@ -958,6 +958,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1584292574, guid: d9702e44c1ae8e746947555039b19184, type: 3}
+      propertyPath: m_Center.y
+      value: 0.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 1584292574, guid: d9702e44c1ae8e746947555039b19184, type: 3}
+      propertyPath: m_Radius
+      value: 0.2
+      objectReference: {fileID: 0}
     - target: {fileID: 8132361680074032476, guid: d9702e44c1ae8e746947555039b19184,
         type: 3}
       propertyPath: m_LocalScale.x
@@ -1023,6 +1031,8 @@ MonoBehaviour:
   BubiPrefab: {fileID: 399828023786277902, guid: b0327f1d3bf696c458259bcfd005c41e,
     type: 3}
   RainEffectPrefab: {fileID: 5853236585639931202, guid: dd580b0e485d49247859145cd5c06d5f,
+    type: 3}
+  BigFireEffect: {fileID: 7350462722152710453, guid: 0b3f448d8906ed74cb0409752ef92062,
     type: 3}
   TorchPrefab: {fileID: 8002557792560109956, guid: 19539e5978ee0e8439d7692dd226a98c,
     type: 3}

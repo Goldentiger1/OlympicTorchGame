@@ -152,8 +152,10 @@ public class GameManager : Singelton<GameManager>
     {
         UIManager.Instance.GameTimeText.text = "GAME OVER";
 
-        yield return new WaitForSeconds(4f);
+        yield return null;
 
-        ChangeGameState(GAME_STATE.START);
+        //yield return new WaitForSeconds(4f);
+
+        //ChangeGameState(GAME_STATE.START);
     }
 }

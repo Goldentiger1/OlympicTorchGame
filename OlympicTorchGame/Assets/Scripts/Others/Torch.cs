@@ -42,9 +42,16 @@ public class Torch : MonoBehaviour
             if (GameManager.Instance.OlympicFlameStarted)
                 return;
 
-            if(GameManager.Instance.TimeToStartFire)
-            GameManager.Instance.OlympicFlameStarted = true; 
+            if (GameManager.Instance.TimeToStartFire)
+            {
+                GameManager.Instance.OlympicFlameStarted = true;
 
+                var bigFirePrefab = ResourceManager.Instance.BigFireEffect;
+
+                var bigFire = Instantiate(bigFirePrefab, other.bounds.center, Quaternion.identity);
+                bigFire.name = bigFirePrefab.name;
+            }
+           
             GameManager.Instance.ChangeGameState(GAME_STATE.END);
            
         }
