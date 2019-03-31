@@ -11,6 +11,16 @@ public class PlayerEngine : Player
         }
     }
 
+    private readonly Torch torch;
+
+    public Torch _Torch
+    {
+        get 
+        {
+            return torch ?? FindObjectOfType<Torch>();
+        }
+    }
+
     private Bubi bubi;
 
     public Bubi Bubi 

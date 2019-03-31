@@ -11,7 +11,7 @@ public enum GAME_STATE
 
 public class GameManager : Singelton<GameManager>
 {
-    [Header("VARIABLES")]
+    [Header("Variables")]
     public float LevelTime = 60f;
     public bool OlympicFlameStarted;
     public bool TimeToStartFire = false;
@@ -91,7 +91,11 @@ public class GameManager : Singelton<GameManager>
 
             // Torch
             var torchPrefab = ResourceManager.Instance.TorchPrefab;
-            var torch = Instantiate(torchPrefab, transform);
+            var torch = Instantiate(
+                torchPrefab, 
+                PlayerEngine.Instance.feetPositionGuess + Vector3.forward,
+                Quaternion.identity,
+                transform);
             torch.name = torchPrefab.name;
 
             WeatherManager.Instance.StartRain();

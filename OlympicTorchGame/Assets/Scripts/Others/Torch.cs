@@ -5,9 +5,6 @@ public class Torch : MonoBehaviour
 {
     [Header("Variables")]
     public float FlameStrenght;
-    public float BaseBurnRate;
-
-    private float currentBurnRate;
 
     private Transform flamingPart;
 
@@ -29,9 +26,9 @@ public class Torch : MonoBehaviour
         StartCoroutine(ILifeTime());
     }
 
-    public void ChangeBurningRate(float newBurnRate)
+    public void ModifyFlameStrenght(float value)
     {
-        currentBurnRate = newBurnRate;
+        FlameStrenght += value;
     }
 
     private void OnTriggerEnter(Collider other) 
@@ -58,14 +55,6 @@ public class Torch : MonoBehaviour
 
                 break;
 
-            // Enemy layer index
-            case 13:
-
-                print("FOOFOFOOFO");
-                ChangeBurningRate(currentBurnRate - 50f);
-
-                break;
-
             default:
 
                 break;
@@ -74,12 +63,10 @@ public class Torch : MonoBehaviour
 
     private IEnumerator ILifeTime()
     {
-        ChangeBurningRate(BaseBurnRate);
-
         while (IsBurning)
         {
-            FlameStrenght -= currentBurnRate;
-            yield return new WaitForSeconds(currentBurnRate);
+            FlameStrenght -= Time.deltaTime;
+            yield return null;
             UIManager.Instance.UpdateTorchStrenght(FlameStrenght);
         }
 

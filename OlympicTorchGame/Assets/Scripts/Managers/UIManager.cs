@@ -14,6 +14,6 @@ public class UIManager : Singelton<UIManager>
 
     public void UpdateTorchStrenght(float currentStrenght)
     {
-        TorchStrenghtText.text = "TORCH STRENGHT: " + currentStrenght.ToString();
+        TorchStrenghtText.text = "TORCH STRENGHT: " + currentStrenght.ToString("0");
     }
 }

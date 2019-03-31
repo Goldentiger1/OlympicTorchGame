@@ -145,6 +145,8 @@ public class Bubi : Bird
             {
                 animator.SetTrigger("Attack");
 
+                PlayerEngine.Instance._Torch.ModifyFlameStrenght(-50f);
+
                 yield return new WaitForSeconds(2f);
 
                 SetClosestWaypoint();
@@ -171,7 +173,8 @@ public class Bubi : Bird
 
         while (Current_AI_State.Equals(AI_STATE.WITHDRAW)) 
         {
-            yield return new WaitForSeconds(2f);
+            animator.SetTrigger("Hit");
+            yield return new WaitForSeconds(1f);
             Change_AI_State(AI_STATE.ROAM);
         }
 

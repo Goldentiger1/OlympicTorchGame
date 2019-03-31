@@ -42,7 +42,7 @@ GameObject:
   - component: {fileID: 6027940506225080584}
   - component: {fileID: 1584292574}
   m_Layer: 11
-  m_Name: FirePoint
+  m_Name: OlympicCauldron
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

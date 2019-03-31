@@ -195,6 +195,10 @@ public abstract class Bird : MonoBehaviour
     protected void Rotate(Vector3 target, float rotationSpeed)
     {
         var targetRotation = Quaternion.LookRotation(target - transform.position);
+
+        if (targetRotation == Quaternion.Euler(Vector3.zero))
+            return;
+
         transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
     }
 
