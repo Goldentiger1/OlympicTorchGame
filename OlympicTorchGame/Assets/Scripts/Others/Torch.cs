@@ -1,12 +1,22 @@
 ﻿using System.Collections;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Torch : MonoBehaviour
 {
     [Header("Variables")]
-    public float FlameStrenght;
+    public float FlameStrenght = 100f;
+    public float FireStartDuration = 6f;
+    private float currentFireStartDuration;
+
+    [Header("UI")]
+    public Image FireCounterImage;
 
     private Transform flamingPart;
+
+    private Coroutine iStartLifeTime, iStartFire;
+
+    private bool startingFire;
 
     public bool IsBurning
     {
@@ -23,7 +33,9 @@ public class Torch : MonoBehaviour
 
     private void Start()
     {
-        StartCoroutine(ILifeTime());
+        currentFireStartDuration = FireStartDuration;
+
+        StartLifeTime();
     }
 
     public void ModifyFlameStrenght(float value)
@@ -31,11 +43,23 @@ public class Torch : MonoBehaviour
         FlameStrenght += value;
     }
 
+    private void StartLifeTime() 
+    {
+        if (iStartLifeTime == null)
+            iStartLifeTime = StartCoroutine(ILifeTime());
+    }
+
+    private void StartFire(Vector3 position, float duration) 
+    {
+        if (iStartFire == null)
+            iStartFire = StartCoroutine(IStartFire(position, duration));
+    }
+
     private void OnTriggerEnter(Collider other) 
     {     
-        var foo = other.gameObject.layer;
+        var layer = other.gameObject.layer;
 
-        switch (foo)
+        switch (layer)
         {
             // FirePoint layer index
             case 11:
@@ -45,12 +69,7 @@ public class Torch : MonoBehaviour
 
                 if (GameManager.Instance.TimeToStartFire) 
                 {
-                    GameManager.Instance.OlympicFlameStarted = true;
-
-                    var bigFirePrefab = ResourceManager.Instance.BigFireEffect;
-
-                    var bigFire = Instantiate(bigFirePrefab, other.bounds.center, Quaternion.identity);
-                    bigFire.name = bigFirePrefab.name;
+                    StartFire(other.bounds.center, FireStartDuration);
                 }
 
                 break;
@@ -59,6 +78,42 @@ public class Torch : MonoBehaviour
 
                 break;
         }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        var layer = other.gameObject.layer;
+
+        switch (layer)
+        {
+            // FirePoint layer index
+            case 11:
+
+                if (GameManager.Instance.OlympicFlameStarted)
+                    return;
+
+                if (GameManager.Instance.TimeToStartFire) 
+                {
+                    startingFire = false;
+                    FireCounterImage.enabled = false;
+                }
+
+                break;
+
+            default:
+
+                break;
+        }
+    }
+
+    private bool SpawnFireEffect(Vector3 position) 
+    {
+        var bigFirePrefab = ResourceManager.Instance.BigFireEffect;
+
+        var bigFire = Instantiate(bigFirePrefab, position, Quaternion.identity);
+        bigFire.name = bigFirePrefab.name;
+
+        return GameManager.Instance.OlympicFlameStarted = true;
     }
 
     private IEnumerator ILifeTime()
@@ -72,5 +127,39 @@ public class Torch : MonoBehaviour
 
         flamingPart.gameObject.SetActive(false);
         GameManager.Instance.ChangeGameState(GAME_STATE.END);
+
+        iStartLifeTime = null;
+    }
+
+    private IEnumerator IStartFire(Vector3 position, float duration) 
+    {
+        startingFire = true;
+        FireCounterImage.enabled = true;
+
+        var ratio = 0f;
+
+        while (startingFire) 
+        {
+            ratio = currentFireStartDuration / FireStartDuration;
+
+            currentFireStartDuration -= Time.deltaTime;
+
+            if (currentFireStartDuration <= 0) 
+            {
+                FireCounterImage.fillAmount = 0f;
+
+                yield return new WaitUntil(() => SpawnFireEffect(position));
+                
+                break;
+            }
+
+            FireCounterImage.fillAmount = ratio;
+            print("Current duration: " + currentFireStartDuration);
+            print("Fill amount: " + FireCounterImage.fillAmount);
+
+            yield return null;
+        }
+
+        iStartFire = null;
     }
 }
