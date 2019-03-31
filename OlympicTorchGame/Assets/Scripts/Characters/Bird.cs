@@ -6,7 +6,8 @@ public enum AI_STATE
 {
     IDLE,
     ROAM,
-    ATTACK
+    ATTACK,
+    WITHDRAW
 }
 
 public abstract class Bird : MonoBehaviour
@@ -16,7 +17,7 @@ public abstract class Bird : MonoBehaviour
     [Header("Movement")]
     public float MoveSpeed = 1f;
     public float RotationSpeed = 5f;
-    public Transform Target;
+    public Transform Target;    
 
     [Header("Waypoints")]
     public bool ShowWaypoints;
@@ -59,7 +60,7 @@ public abstract class Bird : MonoBehaviour
 
     private void Start()
     {
-       
+        SetRandomWaypoint();
     }
 
     private void Update()
@@ -120,6 +121,12 @@ public abstract class Bird : MonoBehaviour
 
                 break;
 
+            case AI_STATE.WITHDRAW:
+
+                Withdraw();
+
+                break;
+
             default:
 
                 Debug.Log("DEFAULT STATE");
@@ -149,7 +156,17 @@ public abstract class Bird : MonoBehaviour
         
     }
 
-    protected void GetClosestWaypoint()
+    protected virtual void Withdraw() 
+    {
+        
+    }
+
+    protected void SetRandomWaypoint() 
+    {
+        waypointIndex = UnityEngine.Random.Range(0, Waypoints.Length);
+    }
+
+    protected void SetClosestWaypoint()
     {
         var currentPosition = transform.position;
         var closestDistance = Mathf.Infinity;

@@ -14,12 +14,10 @@ public class GameManager : Singelton<GameManager>
     [Header("VARIABLES")]
     public float LevelTime = 60f;
     public bool OlympicFlameStarted;
-    public bool UseVR_Player = true;
     public bool TimeToStartFire = false;
 
     private float startLevelTime;
     private bool gameIsCreated;
-    private Camera mainCamera;
 
     public GAME_STATE CurrentGameState
     {
@@ -35,15 +33,8 @@ public class GameManager : Singelton<GameManager>
         }
     }
 
-    private void Awake() 
-    {
-        mainCamera = Camera.main;
-    }
-
     private void Start()
     {
-        mainCamera.gameObject.SetActive(!UseVR_Player);
-
         startLevelTime = LevelTime;
 
         ChangeGameState(GAME_STATE.START);
@@ -92,7 +83,6 @@ public class GameManager : Singelton<GameManager>
             var playerPrefab = ResourceManager.Instance.PlayerPrefab;
             var player = Instantiate(playerPrefab, transform);
             player.name = playerPrefab.name;
-            player.SetActive(UseVR_Player);
 
             // Bubi
             var bubiPrefab = ResourceManager.Instance.BubiPrefab;

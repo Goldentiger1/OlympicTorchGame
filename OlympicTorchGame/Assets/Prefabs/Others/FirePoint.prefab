@@ -74,8 +74,8 @@ SphereCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.4
-  m_Center: {x: 0, y: 1.6, z: 0}
+  m_Radius: 0.2
+  m_Center: {x: 0, y: 0.8, z: 0}
 --- !u!1001 &8132361680073646032
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -133,15 +133,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 400012, guid: 32aa05f23c355834cad6740a1c524077, type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.5
+      value: 0.25
       objectReference: {fileID: 0}
     - target: {fileID: 400012, guid: 32aa05f23c355834cad6740a1c524077, type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.5
+      value: 0.25
       objectReference: {fileID: 0}
     - target: {fileID: 400012, guid: 32aa05f23c355834cad6740a1c524077, type: 3}
       propertyPath: m_LocalScale.z
-      value: 0.5
+      value: 0.25
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 32aa05f23c355834cad6740a1c524077, type: 3}

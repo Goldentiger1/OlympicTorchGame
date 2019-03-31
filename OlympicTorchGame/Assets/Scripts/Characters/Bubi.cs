@@ -3,8 +3,11 @@ using UnityEngine;
 
 public class Bubi : Bird
 {
+    private Coroutine idle, roam, attack, withdraw;
+
     [Header("Audio")]
     public AudioClip AttackClip;
+    public AudioClip HitClip;
 
     private AudioSource audioSource;
 
@@ -35,21 +38,32 @@ public class Bubi : Bird
     {
         base.Idle();
 
-        StartCoroutine(IIdle());
+        if (idle == null)
+            idle = StartCoroutine(IIdle());
     }
 
     protected override void Roam() 
     {
         base.Roam();
 
-        StartCoroutine(IRoam());
+        if (roam == null)
+            roam = StartCoroutine(IRoam());
     }
 
     protected override void Attack() 
     {
         base.Attack();
 
-        StartCoroutine(IAttack());
+        if (attack == null)
+            attack = StartCoroutine(IAttack());
+    }
+
+    protected override void Withdraw() 
+    {
+        base.Withdraw();
+
+        if(withdraw == null)
+            withdraw = StartCoroutine(IWithdraw());
     }
 
     #region COROUTINES
@@ -60,6 +74,8 @@ public class Bubi : Bird
         {
             yield return null;
         }
+
+        idle = null;
     }
 
     private IEnumerator IRoam() 
@@ -77,7 +93,6 @@ public class Bubi : Bird
             }
             else 
             {
-                print("ATTACK");
                 Change_AI_State(AI_STATE.ATTACK);
             }
 
@@ -92,6 +107,8 @@ public class Bubi : Bird
 
             yield return null;
         }
+
+        roam = null;
     }
 
     private IEnumerator IAttack()
@@ -130,7 +147,7 @@ public class Bubi : Bird
 
                 yield return new WaitForSeconds(2f);
 
-                GetClosestWaypoint();
+                SetClosestWaypoint();
 
                 Change_AI_State(AI_STATE.ROAM);
                 break;
@@ -138,6 +155,27 @@ public class Bubi : Bird
 
             yield return null;
         }
+
+        attack = null;
+    }
+
+    private IEnumerator IWithdraw() 
+    {
+        if (audioSource.isPlaying == false) 
+        {
+            audioSource.clip = HitClip;
+            audioSource.volume = Random.Range(0.9f, 1.1f);
+            audioSource.pitch = Random.Range(0.9f, 1.1f);
+            audioSource.Play();
+        }
+
+        while (Current_AI_State.Equals(AI_STATE.WITHDRAW)) 
+        {
+            yield return new WaitForSeconds(2f);
+            Change_AI_State(AI_STATE.ROAM);
+        }
+
+        withdraw = null;
     }
 
     #endregion

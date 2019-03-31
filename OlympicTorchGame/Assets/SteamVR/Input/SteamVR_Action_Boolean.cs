@@ -348,7 +348,14 @@ namespace Valve.VR
             lastActionData = actionData;
             lastActive = active;
 
-            EVRInputError err = OpenVR.Input.GetDigitalActionData(action.handle, ref actionData, actionData_size, inputSourceHandle);
+            if (OpenVR.Input == null) 
+            {
+                Debug.LogError("OpenVR Input == null...");
+                return;
+            }
+
+            EVRInputError err = OpenVR.Input.GetDigitalActionData(action.handle, ref actionData, actionData_size, inputSourceHandle);      
+
             if (err != EVRInputError.None)
                 Debug.LogError("<b>[SteamVR]</b> GetDigitalActionData error (" + action.fullPath + "): " + err.ToString() + " handle: " + action.handle.ToString());
 

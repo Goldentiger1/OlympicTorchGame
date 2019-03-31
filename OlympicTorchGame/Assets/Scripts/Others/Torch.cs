@@ -35,8 +35,7 @@ public class Torch : MonoBehaviour
     }
 
     private void OnTriggerEnter(Collider other) 
-    {
-       
+    {     
         var foo = other.gameObject.layer;
 
         switch (foo)
@@ -47,7 +46,8 @@ public class Torch : MonoBehaviour
                 if (GameManager.Instance.OlympicFlameStarted)
                     return;
 
-                if (GameManager.Instance.TimeToStartFire) {
+                if (GameManager.Instance.TimeToStartFire) 
+                {
                     GameManager.Instance.OlympicFlameStarted = true;
 
                     var bigFirePrefab = ResourceManager.Instance.BigFireEffect;
@@ -55,8 +55,6 @@ public class Torch : MonoBehaviour
                     var bigFire = Instantiate(bigFirePrefab, other.bounds.center, Quaternion.identity);
                     bigFire.name = bigFirePrefab.name;
                 }
-
-                GameManager.Instance.ChangeGameState(GAME_STATE.END);
 
                 break;
 
