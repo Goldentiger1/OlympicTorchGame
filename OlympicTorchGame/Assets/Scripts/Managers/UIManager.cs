@@ -72,7 +72,6 @@ public class UIManager : Singelton<UIManager>
     public void UpdateGameTime(float currentTime, float ratio)
     {
         gameTimeFillImage.fillAmount = ratio;
-        
         GameTimeText = "TIME: " + currentTime.ToString("0");
     }
 

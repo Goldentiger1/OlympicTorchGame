@@ -1,7 +1,26 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
+
+public enum WEATHER_STATE
+{
+    LIGHT,
+    MEDIUM,
+    HEAVY,
+    NONE
+};
 
 public class WeatherManager : Singelton<WeatherManager>
 {
+    private WEATHER_STATE currentWeatherState;
+
+    [Header("Audio")]
+    public AudioClip Rain_light;
+    public AudioClip Rain_medium;
+    public AudioClip Rain_heavy;
+    public AudioClip Wind;
+    public AudioSource RainSource;
+    public AudioSource WindSource;
+
     private ParticleSystem rainDropsEffect;
     private ParticleSystem rainRipplesEffect;
 
@@ -15,9 +34,44 @@ public class WeatherManager : Singelton<WeatherManager>
         rainRipplesEffect = rainEffect.Find("RainRipples").GetComponent<ParticleSystem>();
     }
 
-    public void StartRain() 
+    public void ChangeWeatherState(WEATHER_STATE newWeatherState)
     {
-        if(rainDropsEffect.isPlaying == false) 
+        currentWeatherState = newWeatherState;
+
+        switch (currentWeatherState)
+        {
+            case WEATHER_STATE.LIGHT:
+
+                break;
+
+            case WEATHER_STATE.MEDIUM:
+
+                break;
+
+            case WEATHER_STATE.HEAVY:
+
+                break;
+
+            case WEATHER_STATE.NONE:
+
+                if (rainDropsEffect.isPlaying == true)
+                {
+                    rainDropsEffect.Stop();
+                }
+
+                if (rainRipplesEffect.isPlaying == true)
+                {
+                    rainRipplesEffect.Stop();
+                }
+
+                break;
+
+            default:
+
+                break;
+        }
+
+        if (rainDropsEffect.isPlaying == false)
         {
             rainDropsEffect.Play();
         }
@@ -28,22 +82,25 @@ public class WeatherManager : Singelton<WeatherManager>
         }
     }
 
-    public void EndRain() 
+    private void ModifyRain(int minDropParticles, int maxDropParticles, int minRippleParticles, int maxRippleParticles)
     {
-        if (rainDropsEffect.isPlaying == true)
-        {
-            rainDropsEffect.Stop();
-        }
 
-        if (rainRipplesEffect.isPlaying == true) 
-        {
-            rainRipplesEffect.Stop();
-        }
     }
 
-    public void Wind(float speed, float duration) 
+    private void ModifyWind(float speed) 
     {
-        var foo = rainDropsEffect.velocityOverLifetime;
-        foo.x = speed;
+       
+    }
+
+    private IEnumerator IChangeWind()
+    {
+        while (currentWeatherState.Equals(WEATHER_STATE.NONE))
+        {
+            var newWind = Random.Range(2f, 6f);
+
+            yield return new WaitForSeconds(newWind);
+
+            ModifyWind(20f);
+        }
     }
 }

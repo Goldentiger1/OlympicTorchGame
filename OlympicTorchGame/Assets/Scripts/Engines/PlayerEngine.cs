@@ -11,13 +11,13 @@ public class PlayerEngine : Player
         }
     }
 
-    private readonly Torch torch;
+    private Torch torch;
 
     public Torch _Torch
     {
         get 
         {
-            return torch ?? FindObjectOfType<Torch>();
+            return torch = torch ?? FindObjectOfType<Torch>();
         }
     }
 

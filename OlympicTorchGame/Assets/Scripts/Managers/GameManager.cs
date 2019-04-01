@@ -103,7 +103,7 @@ public class GameManager : Singelton<GameManager>
                 transform);
             torch.name = torchPrefab.name;
 
-            WeatherManager.Instance.StartRain();
+            WeatherManager.Instance.ChangeWeatherState(WEATHER_STATE.LIGHT);
         }     
 
         return gameIsCreated = true;
@@ -153,7 +153,11 @@ public class GameManager : Singelton<GameManager>
 
         yield return new WaitForSeconds(4f);
 
-        //LoadScene(CurrentSceneIndex);
+        UIManager.Instance.GameTimeText = "RESTARTING...";
+
+        yield return new WaitForSeconds(4f);
+
+        LoadScene(CurrentSceneIndex);
 
         //ChangeGameState(GAME_STATE.START);
     }
