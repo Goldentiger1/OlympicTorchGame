@@ -125,7 +125,7 @@ public class Bubi : Bird
         {
             if (Target == null) 
             {
-                Target = FindObjectOfType<Torch>().transform;
+                Target = PlayerEngine.Instance._Torch.transform;
 
                 if(Target == null) 
                 {
@@ -176,6 +176,9 @@ public class Bubi : Bird
             animator.SetTrigger("Hit");
             yield return new WaitForSeconds(1f);
             Change_AI_State(AI_STATE.ROAM);
+
+            // !!!
+            yield return new WaitForSeconds(1f);
         }
 
         withdraw = null;
