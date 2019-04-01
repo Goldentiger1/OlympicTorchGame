@@ -107,7 +107,7 @@ public class GameManager : Singelton<GameManager>
                 transform);
             torch.name = torchPrefab.name;
 
-            WeatherManager.Instance.ChangeWeatherState(WEATHER_STATE.LIGHT);
+            WeatherManager.Instance.ChangeWeatherState(WEATHER_STATE.NONE);
         }     
 
         return gameIsCreated = true;
@@ -152,8 +152,7 @@ public class GameManager : Singelton<GameManager>
     }
 
     private IEnumerator IEnd()
-    {
-       
+    {     
         UIManager.Instance.GameTimeText = OlympicFlameStarted ? "VICTORY!" : "GAME OVER!";
         AudioSource.PlayClipAtPoint(OlympicFlameStarted ? Victory : Lose, PlayerEngine.Instance.feetPositionGuess + Vector3.up);
       

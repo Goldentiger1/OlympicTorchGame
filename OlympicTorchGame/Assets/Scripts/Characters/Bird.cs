@@ -62,20 +62,6 @@ public abstract class Bird : MonoBehaviour
         SetRandomWaypoint();
     }
 
-    private void Update()
-    {
-        //if (Input.GetKeyDown(KeyCode.S))
-        //{
-        //    WeatherManager.Instance.Wind(20f, 1);
-        //}
-
-        //if (Input.GetKeyDown(KeyCode.A))
-        //{
-        //    WeatherManager.Instance.Wind(0f, 1);
-
-        //}
-    }
-
     private void OnDrawGizmos()
     {
         if (ShowWaypoints)
