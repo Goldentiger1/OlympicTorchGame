@@ -20,11 +20,7 @@ public class HandEngine : Hand
                 //{
                 //    PlayerEngine.Instance.Bubi.Change_AI_State(AI_STATE.WITHDRAW);
                 //}
-            } 
-            else 
-            {
-                
-            }
+            }            
 
             PlayerEngine.Instance.Bubi.Change_AI_State(AI_STATE.WITHDRAW);
         }

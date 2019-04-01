@@ -35,6 +35,8 @@ public class Torch : MonoBehaviour
     {
         currentFireStartDuration = FireStartDuration;
 
+        FireCounterImage.enabled = false;
+
         StartLifeTime();
     }
 
@@ -155,9 +157,7 @@ public class Torch : MonoBehaviour
             }
 
             FireCounterImage.fillAmount = ratio;
-            print("Current duration: " + currentFireStartDuration);
-            print("Fill amount: " + FireCounterImage.fillAmount);
-
+           
             yield return null;
         }
 

@@ -874,7 +874,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 719ff1c728e04fd4ea20bc00b1ebf45e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  LevelTime: 200
+  LevelTime: 10
   OlympicFlameStarted: 0
   TimeToStartFire: 0
 --- !u!1 &1224651427
@@ -1117,6 +1117,34 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6027940506225080584, guid: d9702e44c1ae8e746947555039b19184,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8132361680074032476, guid: d9702e44c1ae8e746947555039b19184,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8132361680074032476, guid: d9702e44c1ae8e746947555039b19184,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8132361680074032476, guid: d9702e44c1ae8e746947555039b19184,
+        type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.45
+      objectReference: {fileID: 0}
+    - target: {fileID: 1584292574, guid: d9702e44c1ae8e746947555039b19184, type: 3}
+      propertyPath: m_Center.y
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1584292574, guid: d9702e44c1ae8e746947555039b19184, type: 3}
+      propertyPath: m_Radius
+      value: 0.4
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d9702e44c1ae8e746947555039b19184, type: 3}
