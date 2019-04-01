@@ -84,7 +84,6 @@ public class Bubi : Bird
 
         var attackTime = Random.Range(6f, 10f);
 
-
         while (Current_AI_State.Equals(AI_STATE.ROAM)) 
         {
             if(attackTime > 0f) 

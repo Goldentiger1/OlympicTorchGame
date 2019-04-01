@@ -16,10 +16,15 @@ public class GameManager : Singelton<GameManager>
     public bool OlympicFlameStarted;
     public bool TimeToStartFire = false;
 
-    private float startLevelTime;
     private bool gameIsCreated;
 
     public GAME_STATE CurrentGameState
+    {
+        get;
+        private set;
+    }
+
+    public float StartLevelTime
     {
         get;
         private set;
@@ -35,7 +40,7 @@ public class GameManager : Singelton<GameManager>
 
     private void Start()
     {
-        startLevelTime = LevelTime;
+        StartLevelTime = LevelTime;
 
         ChangeGameState(GAME_STATE.START);
     }
@@ -109,8 +114,8 @@ public class GameManager : Singelton<GameManager>
         OlympicFlameStarted = false;
         TimeToStartFire = false;
 
-        LevelTime = startLevelTime;
-        UIManager.Instance.GameTimeText.text = "STARTING...";
+        LevelTime = StartLevelTime;
+        UIManager.Instance.GameTimeText = "STARTING...";
 
         yield return new WaitUntil(() => CreateLevelObjects());
 
@@ -119,16 +124,19 @@ public class GameManager : Singelton<GameManager>
 
     private IEnumerator IRun()
     {
+        var ratio = LevelTime / StartLevelTime;
+
         while (CurrentGameState.Equals(GAME_STATE.RUN))
         {
+            ratio = LevelTime / StartLevelTime;
             LevelTime -= Time.deltaTime;
-            UIManager.Instance.UpdateGameTime(LevelTime);        
+            UIManager.Instance.UpdateGameTime(LevelTime, ratio);        
 
             if(LevelTime <= 0)
             {
                 TimeToStartFire = true;
 
-                UIManager.Instance.GameTimeText.text = "START FIRE";
+                UIManager.Instance.GameTimeText = "START FIRE";
 
                 yield return new WaitUntil(() => OlympicFlameStarted);
 
@@ -141,7 +149,7 @@ public class GameManager : Singelton<GameManager>
 
     private IEnumerator IEnd()
     {
-        UIManager.Instance.GameTimeText.text = "GAME OVER";
+        UIManager.Instance.GameTimeText = "GAME OVER";
 
         yield return new WaitForSeconds(4f);
 

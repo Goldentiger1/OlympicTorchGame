@@ -97,10 +97,13 @@ public abstract class Bird : MonoBehaviour
 
     public void Change_AI_State(AI_STATE new_AI_State)
     {
+        if (GameManager.Instance.CurrentGameState.Equals(GAME_STATE.END))
+        {
+            new_AI_State = AI_STATE.IDLE;
+        }
+
         Previous_AI_State = Current_AI_State;
         Current_AI_State = new_AI_State;
-
-        Debug.LogWarning(Current_AI_State);
 
         switch (Current_AI_State)
         {

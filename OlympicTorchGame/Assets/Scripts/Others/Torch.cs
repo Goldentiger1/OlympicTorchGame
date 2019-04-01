@@ -8,6 +8,7 @@ public class Torch : MonoBehaviour
     public float FlameStrenght = 100f;
     public float FireStartDuration = 6f;
     private float currentFireStartDuration;
+    private float startFlameStrenght;
 
     [Header("UI")]
     public Image FireCounterImage;
@@ -34,6 +35,7 @@ public class Torch : MonoBehaviour
     private void Start()
     {
         currentFireStartDuration = FireStartDuration;
+        startFlameStrenght = FlameStrenght;
 
         FireCounterImage.enabled = false;
 
@@ -121,11 +123,16 @@ public class Torch : MonoBehaviour
 
     private IEnumerator ILifeTime()
     {
+        var ratio = FlameStrenght / startFlameStrenght;
+
         while (IsBurning)
         {
             FlameStrenght -= Time.deltaTime;
+
+            ratio = FlameStrenght / startFlameStrenght;
+            UIManager.Instance.UpdateTorchStrenght(FlameStrenght, ratio);
+
             yield return null;
-            UIManager.Instance.UpdateTorchStrenght(FlameStrenght);
         }
 
         flamingPart.gameObject.SetActive(false);
@@ -141,7 +148,9 @@ public class Torch : MonoBehaviour
 
         var ratio = 0f;
 
-        while (startingFire) 
+        var target = PlayerEngine.Instance.hmdTransform;
+
+        while (startingFire && IsBurning) 
         {
             ratio = currentFireStartDuration / FireStartDuration;
 
@@ -157,7 +166,9 @@ public class Torch : MonoBehaviour
             }
 
             FireCounterImage.fillAmount = ratio;
-           
+
+            FireCounterImage.transform.LookAt(target.position);
+
             yield return null;
         }
 

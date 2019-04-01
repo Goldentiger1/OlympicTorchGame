@@ -1,12 +1,13 @@
-﻿using Valve.VR.InteractionSystem;
+﻿using UnityEngine;
+using Valve.VR.InteractionSystem;
 
 public class HandEngine : Hand
 {
     private readonly int enemyLayerIndex = 13;
 
-    private readonly float minHitVelocityMagnitude = 2f;
+    //private readonly float minHitVelocityMagnitude = 2f;
 
-    private void OnTriggerEnter(UnityEngine.Collider other) 
+    private void OnTriggerEnter(Collider other) 
     {
         if(other.gameObject.layer == enemyLayerIndex) 
         {
@@ -26,7 +27,7 @@ public class HandEngine : Hand
         }
     }
 
-    private void OnTriggerExit(UnityEngine.Collider other) 
+    private void OnTriggerExit(Collider other) 
     {
         
     }
