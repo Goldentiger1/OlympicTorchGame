@@ -13,20 +13,20 @@ public class HandEngine : Hand
             if (Player.instance.rigSteamVR.activeSelf) 
             {
                 // !!!!!!!
-                var currentVelocityMagnitude = GetTrackedObjectVelocity().magnitude;
-                print(currentVelocityMagnitude);
+                //var currentVelocityMagnitude = GetTrackedObjectVelocity().magnitude;
+                //print(currentVelocityMagnitude);
 
-                if(currentVelocityMagnitude >= minHitVelocityMagnitude) 
-                {
-                    PlayerEngine.Instance.Bubi.Change_AI_State(AI_STATE.WITHDRAW);
-                }
+                //if(currentVelocityMagnitude >= minHitVelocityMagnitude) 
+                //{
+                //    PlayerEngine.Instance.Bubi.Change_AI_State(AI_STATE.WITHDRAW);
+                //}
             } 
             else 
             {
-                PlayerEngine.Instance.Bubi.Change_AI_State(AI_STATE.WITHDRAW);
+                
             }
 
-            
+            PlayerEngine.Instance.Bubi.Change_AI_State(AI_STATE.WITHDRAW);
         }
     }
 

@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using UnityEngine;
 
 public enum AI_STATE
@@ -65,16 +64,16 @@ public abstract class Bird : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.S))
-        {
-            WeatherManager.Instance.Wind(20f, 1);
-        }
+        //if (Input.GetKeyDown(KeyCode.S))
+        //{
+        //    WeatherManager.Instance.Wind(20f, 1);
+        //}
 
-        if (Input.GetKeyDown(KeyCode.A))
-        {
-            WeatherManager.Instance.Wind(0f, 1);
+        //if (Input.GetKeyDown(KeyCode.A))
+        //{
+        //    WeatherManager.Instance.Wind(0f, 1);
 
-        }
+        //}
     }
 
     private void OnDrawGizmos()
@@ -100,6 +99,8 @@ public abstract class Bird : MonoBehaviour
     {
         Previous_AI_State = Current_AI_State;
         Current_AI_State = new_AI_State;
+
+        Debug.LogWarning(Current_AI_State);
 
         switch (Current_AI_State)
         {

@@ -177,8 +177,6 @@ public class Bubi : Bird
             yield return new WaitForSeconds(1f);
             Change_AI_State(AI_STATE.ROAM);
 
-            // !!!
-            yield return new WaitForSeconds(1f);
         }
 
         withdraw = null;

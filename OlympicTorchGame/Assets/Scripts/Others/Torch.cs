@@ -40,7 +40,8 @@ public class Torch : MonoBehaviour
 
     public void ModifyFlameStrenght(float value)
     {
-        FlameStrenght += value;
+        var newStrenght = FlameStrenght + value;
+        FlameStrenght = newStrenght < 0 ? 0 : newStrenght;
     }
 
     private void StartLifeTime() 

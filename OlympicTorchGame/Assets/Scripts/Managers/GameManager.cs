@@ -145,7 +145,7 @@ public class GameManager : Singelton<GameManager>
 
         yield return new WaitForSeconds(4f);
 
-        LoadScene(CurrentSceneIndex);
+        //LoadScene(CurrentSceneIndex);
 
         //ChangeGameState(GAME_STATE.START);
     }
