@@ -16,6 +16,10 @@ public class GameManager : Singelton<GameManager>
     public bool OlympicFlameStarted;
     public bool TimeToStartFire = false;
 
+    [Header("Audio")]
+    public AudioClip Victory;
+    public AudioClip Lose;
+
     private bool gameIsCreated;
 
     public GAME_STATE CurrentGameState
@@ -149,8 +153,10 @@ public class GameManager : Singelton<GameManager>
 
     private IEnumerator IEnd()
     {
-        UIManager.Instance.GameTimeText = "GAME OVER";
-
+       
+        UIManager.Instance.GameTimeText = OlympicFlameStarted ? "VICTORY!" : "GAME OVER!";
+        AudioSource.PlayClipAtPoint(OlympicFlameStarted ? Victory : Lose, PlayerEngine.Instance.feetPositionGuess + Vector3.up);
+      
         yield return new WaitForSeconds(4f);
 
         UIManager.Instance.GameTimeText = "RESTARTING...";

@@ -521,11 +521,11 @@ MonoBehaviour:
     lineCount: 1
     pageCount: 1
     materialCount: 1
-  m_havePropertiesChanged: 1
+  m_havePropertiesChanged: 0
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_spriteAnimator: {fileID: 0}
-  m_isInputParsingRequired: 1
+  m_isInputParsingRequired: 0
   m_inputSource: 0
   m_hasFontAssetChanged: 0
   m_subTextObjects:
@@ -1004,11 +1004,11 @@ MonoBehaviour:
     lineCount: 1
     pageCount: 1
     materialCount: 1
-  m_havePropertiesChanged: 1
+  m_havePropertiesChanged: 0
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_spriteAnimator: {fileID: 0}
-  m_isInputParsingRequired: 1
+  m_isInputParsingRequired: 0
   m_inputSource: 0
   m_hasFontAssetChanged: 0
   m_subTextObjects:
@@ -1157,6 +1157,8 @@ MonoBehaviour:
   LevelTime: 10
   OlympicFlameStarted: 0
   TimeToStartFire: 0
+  Victory: {fileID: 8300000, guid: d087651c346dfbd45892a27071f8bb3b, type: 3}
+  Lose: {fileID: 8300000, guid: a98044e86fcf75d4c8d099eb1e1c4007, type: 3}
 --- !u!1 &1214974125
 GameObject:
   m_ObjectHideFlags: 0

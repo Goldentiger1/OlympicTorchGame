@@ -135,6 +135,7 @@ public class Torch : MonoBehaviour
             yield return null;
         }
 
+        UIManager.Instance.UpdateTorchStrenght(FlameStrenght, 0f);
         flamingPart.gameObject.SetActive(false);
         GameManager.Instance.ChangeGameState(GAME_STATE.END);
 
