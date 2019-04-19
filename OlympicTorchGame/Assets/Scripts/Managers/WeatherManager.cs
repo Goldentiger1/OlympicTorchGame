@@ -3,19 +3,23 @@ using UnityEngine;
 
 public enum WEATHER_STATE
 {
+    NONE,
     LIGHT,
     MEDIUM,
-    HEAVY,
-    NONE
+    HEAVY    
 };
 
 public class WeatherManager : Singelton<WeatherManager>
 {
     private WEATHER_STATE currentWeatherState;
 
+    [Header("General")]
+    public WEATHER_STATE WeatherState;
+
     [Header("Wind")]
     public bool ShowWindPoints = true;
     public Vector3[] WindPoints;
+    private Vector3 currentWindPoint;
 
     [Header("Audio")]
     public AudioClip Rain_light;
@@ -60,9 +64,9 @@ public class WeatherManager : Singelton<WeatherManager>
 
             for (int i = 0; i < WindPoints.Length; i++)
             {
-                var waypoint = WindPoints[i];
-                Gizmos.DrawLine(waypoint + Vector3.forward * 0.2f, waypoint + Vector3.back * 0.2f);
-                Gizmos.DrawLine(waypoint + Vector3.right * 0.2f, waypoint + Vector3.left * 0.2f);
+                currentWindPoint = WindPoints[i];
+                Gizmos.DrawLine(currentWindPoint + Vector3.forward * 0.2f, currentWindPoint + Vector3.back * 0.2f);
+                Gizmos.DrawLine(currentWindPoint + Vector3.right * 0.2f, currentWindPoint + Vector3.left * 0.2f);
             }
         }
     }
@@ -139,6 +143,11 @@ public class WeatherManager : Singelton<WeatherManager>
         }
     }
 
+    public void StartWeather()
+    {
+        ChangeWeatherState(WeatherState);
+    }
+
     private void StopRain()
     {
         if (rainDropsEffect.isPlaying == true)
@@ -192,17 +201,16 @@ public class WeatherManager : Singelton<WeatherManager>
         {
             var nextWind = Random.Range(2f, 6f);
 
-            yield return new WaitForSeconds(nextWind);
-
             var randomWindPosition = WindPoints[Random.Range(0, WindPoints.Length)];
-
             ChangeWindSourcePosition(randomWindPosition);
+
+            yield return new WaitForSeconds(nextWind);
 
             var windDuration = Random.Range(2f, 3f);
 
             // FIX ME!!
 
-            //ModifyWind()
+            //ModifyWind(currentWindPoint, 20f);
 
             yield return new WaitForSeconds(windDuration);
         }

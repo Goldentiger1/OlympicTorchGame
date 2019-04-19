@@ -107,7 +107,7 @@ public class GameManager : Singelton<GameManager>
                 transform);
             torch.name = torchPrefab.name;
 
-            WeatherManager.Instance.ChangeWeatherState(WEATHER_STATE.NONE);
+            WeatherManager.Instance.StartWeather(); 
         }     
 
         return gameIsCreated = true;
