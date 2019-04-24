@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class UIManager : Singelton<UIManager>
 {
@@ -17,9 +18,9 @@ public class UIManager : Singelton<UIManager>
     [SerializeField]
     private Image torchStrenghtFillImage; 
     [SerializeField]
-    private Text gameTimeText;
+    private TextMeshProUGUI gameTimeText;
     [SerializeField]
-    private Text torchStrenghtText;
+    private TextMeshProUGUI torchStrenghtText;
     #endregion VARIABLES
 
     #region PROPERTIES

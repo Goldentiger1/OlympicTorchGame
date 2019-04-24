@@ -10,7 +10,8 @@ public class ResourceManager : Singelton<ResourceManager>
 
     [Header("Effects")]
     public GameObject RainEffectPrefab;
-    public GameObject BigFireEffect;
+    public GameObject BigFireEffectPrefab;
+    public GameObject FireEffectPrefab;
 
     [Header("Others")]
     public GameObject TorchPrefab;

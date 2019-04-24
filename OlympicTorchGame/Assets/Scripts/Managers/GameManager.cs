@@ -10,6 +10,7 @@ public class GameManager : Singelton<GameManager>
     public float LevelTime = 60f;
     public bool OlympicFlameStarted;
     public bool TimeToStartFire = false;
+    public Transform OlympicCauldron;
 
     [Header("Audio")]
     public AudioClip Victory;

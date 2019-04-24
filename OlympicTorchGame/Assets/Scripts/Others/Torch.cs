@@ -7,6 +7,7 @@ public class Torch : MonoBehaviour
     #region VARIABLES
 
     [Header("Variables")]
+    [Range(0, 100)]
     public float FlameStrenght = 100f;
     public float FireStartDuration = 6f;
     private float currentFireStartDuration;
@@ -16,6 +17,8 @@ public class Torch : MonoBehaviour
     public Image FireCounterImage;
 
     private Transform flamingPart;
+    public ParticleSystem TorchFlameEffect;
+    public float SliderValue;
 
     private Coroutine iStartLifeTime, iStartFire;
 
@@ -107,14 +110,12 @@ public class Torch : MonoBehaviour
 
     #region CUSTOM_FUNCTIONS
 
-    private bool SpawnFireEffect(Vector3 position)
+    private bool SpawnFireEffect(GameObject fireEffectPrefab, Vector3 position, Transform parent)
     {
-        var bigFirePrefab = ResourceManager.Instance.BigFireEffect;
+        var fireEffectInstance = Instantiate(fireEffectPrefab, position, Quaternion.identity, parent);
+        fireEffectInstance.name = fireEffectPrefab.name;
 
-        var bigFire = Instantiate(bigFirePrefab, position, Quaternion.identity);
-        bigFire.name = bigFirePrefab.name;
-
-        return GameManager.Instance.OlympicFlameStarted = true;
+        return true;
     }
 
     private void StartLifeTime() 
@@ -133,10 +134,17 @@ public class Torch : MonoBehaviour
     {
         var newStrenght = FlameStrenght + value;
         FlameStrenght = newStrenght < 0 ? 0 : newStrenght;
+
+        var main = TorchFlameEffect.main;
+        main.startLifetime = newStrenght;
     }
 
     private IEnumerator ILifeTime()
     {
+        SpawnFireEffect(ResourceManager.Instance.FireEffectPrefab, flamingPart.position, flamingPart);
+
+        TorchFlameEffect = flamingPart.GetComponentInChildren<ParticleSystem>();
+
         var ratio = FlameStrenght / startFlameStrenght;
 
         while (IsBurning)
@@ -175,7 +183,9 @@ public class Torch : MonoBehaviour
             {
                 FireCounterImage.fillAmount = 0f;
 
-                yield return new WaitUntil(() => SpawnFireEffect(position));
+                yield return new WaitUntil(() => SpawnFireEffect(ResourceManager.Instance.BigFireEffectPrefab, position, GameManager.Instance.OlympicCauldron));
+
+                GameManager.Instance.OlympicFlameStarted = true;
 
                 break;
             }
