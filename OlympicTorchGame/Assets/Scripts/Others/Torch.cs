@@ -4,7 +4,10 @@ using UnityEngine.UI;
 
 public class Torch : MonoBehaviour
 {
+    #region VARIABLES
+
     [Header("Variables")]
+    [Range(0, 100)]
     public float FlameStrenght = 100f;
     public float FireStartDuration = 6f;
     private float currentFireStartDuration;
@@ -14,10 +17,16 @@ public class Torch : MonoBehaviour
     public Image FireCounterImage;
 
     private Transform flamingPart;
+    public ParticleSystem TorchFlameEffect;
+    public float SliderValue;
 
     private Coroutine iStartLifeTime, iStartFire;
 
     private bool startingFire;
+
+    #endregion VARIABLES
+
+    #region PROPERTIES
 
     public bool IsBurning
     {
@@ -26,6 +35,10 @@ public class Torch : MonoBehaviour
             return FlameStrenght > 0;
         }
     }
+
+    #endregion PROPERTIES
+
+    #region UNITY_FUNCTIONS
 
     private void Awake()
     {
@@ -42,26 +55,8 @@ public class Torch : MonoBehaviour
         StartLifeTime();
     }
 
-    public void ModifyFlameStrenght(float value)
+    private void OnTriggerEnter(Collider other)
     {
-        var newStrenght = FlameStrenght + value;
-        FlameStrenght = newStrenght < 0 ? 0 : newStrenght;
-    }
-
-    private void StartLifeTime() 
-    {
-        if (iStartLifeTime == null)
-            iStartLifeTime = StartCoroutine(ILifeTime());
-    }
-
-    private void StartFire(Vector3 position, float duration) 
-    {
-        if (iStartFire == null)
-            iStartFire = StartCoroutine(IStartFire(position, duration));
-    }
-
-    private void OnTriggerEnter(Collider other) 
-    {     
         var layer = other.gameObject.layer;
 
         switch (layer)
@@ -72,7 +67,7 @@ public class Torch : MonoBehaviour
                 if (GameManager.Instance.OlympicFlameStarted)
                     return;
 
-                if (GameManager.Instance.TimeToStartFire) 
+                if (GameManager.Instance.TimeToStartFire)
                 {
                     StartFire(other.bounds.center, FireStartDuration);
                 }
@@ -97,7 +92,7 @@ public class Torch : MonoBehaviour
                 if (GameManager.Instance.OlympicFlameStarted)
                     return;
 
-                if (GameManager.Instance.TimeToStartFire) 
+                if (GameManager.Instance.TimeToStartFire)
                 {
                     startingFire = false;
                     FireCounterImage.enabled = false;
@@ -111,18 +106,45 @@ public class Torch : MonoBehaviour
         }
     }
 
-    private bool SpawnFireEffect(Vector3 position) 
+    #endregion UNITY_FUNCTIONS
+
+    #region CUSTOM_FUNCTIONS
+
+    private bool SpawnFireEffect(GameObject fireEffectPrefab, Vector3 position, Transform parent)
     {
-        var bigFirePrefab = ResourceManager.Instance.BigFireEffect;
+        var fireEffectInstance = Instantiate(fireEffectPrefab, position, Quaternion.identity, parent);
+        fireEffectInstance.name = fireEffectPrefab.name;
 
-        var bigFire = Instantiate(bigFirePrefab, position, Quaternion.identity);
-        bigFire.name = bigFirePrefab.name;
+        return true;
+    }
 
-        return GameManager.Instance.OlympicFlameStarted = true;
+    private void StartLifeTime() 
+    {
+        if (iStartLifeTime == null)
+            iStartLifeTime = StartCoroutine(ILifeTime());
+    }
+
+    private void StartFire(Vector3 position, float duration) 
+    {
+        if (iStartFire == null)
+            iStartFire = StartCoroutine(IStartFire(position, duration));
+    }
+
+    public void ModifyFlameStrenght(float value)
+    {
+        var newStrenght = FlameStrenght + value;
+        FlameStrenght = newStrenght < 0 ? 0 : newStrenght;
+
+        var main = TorchFlameEffect.main;
+        main.startLifetime = newStrenght;
     }
 
     private IEnumerator ILifeTime()
     {
+        SpawnFireEffect(ResourceManager.Instance.FireEffectPrefab, flamingPart.position, flamingPart);
+
+        TorchFlameEffect = flamingPart.GetComponentInChildren<ParticleSystem>();
+
         var ratio = FlameStrenght / startFlameStrenght;
 
         while (IsBurning)
@@ -142,7 +164,7 @@ public class Torch : MonoBehaviour
         iStartLifeTime = null;
     }
 
-    private IEnumerator IStartFire(Vector3 position, float duration) 
+    private IEnumerator IStartFire(Vector3 position, float duration)
     {
         startingFire = true;
         FireCounterImage.enabled = true;
@@ -151,18 +173,20 @@ public class Torch : MonoBehaviour
 
         var target = PlayerEngine.Instance.hmdTransform;
 
-        while (startingFire && IsBurning) 
+        while (startingFire && IsBurning)
         {
             ratio = currentFireStartDuration / FireStartDuration;
 
             currentFireStartDuration -= Time.deltaTime;
 
-            if (currentFireStartDuration <= 0) 
+            if (currentFireStartDuration <= 0)
             {
                 FireCounterImage.fillAmount = 0f;
 
-                yield return new WaitUntil(() => SpawnFireEffect(position));
-                
+                yield return new WaitUntil(() => SpawnFireEffect(ResourceManager.Instance.BigFireEffectPrefab, position, GameManager.Instance.OlympicCauldron));
+
+                GameManager.Instance.OlympicFlameStarted = true;
+
                 break;
             }
 
@@ -175,4 +199,6 @@ public class Torch : MonoBehaviour
 
         iStartFire = null;
     }
+
+    #endregion CUSTOM_FUNCTIONS
 }
