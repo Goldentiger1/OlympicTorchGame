@@ -17,7 +17,9 @@ public class Torch : MonoBehaviour
     public Image FireCounterImage;
 
     private Transform flamingPart;
-    public ParticleSystem TorchFlameEffect;
+    private ParticleSystem torchFlameEffect;
+
+    private float startRateOverTime;
     public float SliderValue;
 
     private Coroutine iStartLifeTime, iStartFire;
@@ -134,16 +136,15 @@ public class Torch : MonoBehaviour
     {
         var newStrenght = FlameStrenght + value;
         FlameStrenght = newStrenght < 0 ? 0 : newStrenght;
-
-        var main = TorchFlameEffect.main;
-        main.startLifetime = newStrenght;
     }
 
     private IEnumerator ILifeTime()
     {
         SpawnFireEffect(ResourceManager.Instance.FireEffectPrefab, flamingPart.position, flamingPart);
 
-        TorchFlameEffect = flamingPart.GetComponentInChildren<ParticleSystem>();
+        torchFlameEffect = flamingPart.GetComponentInChildren<ParticleSystem>();
+        var emission = torchFlameEffect.emission;
+        startRateOverTime = emission.rateOverTime.constant;
 
         var ratio = FlameStrenght / startFlameStrenght;
 
@@ -153,6 +154,9 @@ public class Torch : MonoBehaviour
 
             ratio = FlameStrenght / startFlameStrenght;
             UIManager.Instance.UpdateTorchStrenght(FlameStrenght, ratio);
+           
+            emission.rateOverTime = ratio * startRateOverTime;
+            print(emission.rateOverTime.constant);
 
             yield return null;
         }

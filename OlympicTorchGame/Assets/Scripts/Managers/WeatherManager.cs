@@ -5,8 +5,6 @@ public class WeatherManager : Singelton<WeatherManager>
 {
     #region VARIABLES
 
-    private WEATHER_STATE currentWeatherState;
-
     [Header("General")]
     public WEATHER_STATE WeatherState;
 
@@ -22,6 +20,8 @@ public class WeatherManager : Singelton<WeatherManager>
     public AudioClip Wind;
     public AudioSource RainSource;
     public AudioSource WindSource;
+
+    private WEATHER_STATE currentWeatherState;
 
     private ParticleSystem rainDropsEffect;
     private ParticleSystem rainRipplesEffect;
@@ -44,15 +44,7 @@ public class WeatherManager : Singelton<WeatherManager>
 
     private void Awake()
     {
-        var rainEffectPrefab = ResourceManager.Instance.RainEffectPrefab;
-        var rainEffect = Instantiate(rainEffectPrefab, transform).transform;
-        rainEffect.name = rainEffectPrefab.name;
-
-        rainDropsEffect = rainEffect.Find("RainDrops").GetComponent<ParticleSystem>();
-        rainRipplesEffect = rainEffect.Find("RainRipples").GetComponent<ParticleSystem>();
-        dropsModule = rainDropsEffect.emission;
-        ripplesModule = rainRipplesEffect.emission;
-        velocityOverLifeTimeModule = rainDropsEffect.velocityOverLifetime;
+        Initialize();
     }
 
     private void Start()
@@ -79,58 +71,17 @@ public class WeatherManager : Singelton<WeatherManager>
 
     #region CUSTOM_FUNCTIONS
 
-    public void ChangeWeatherState(WEATHER_STATE newWeatherState)
+    private void Initialize()
     {
-        currentWeatherState = newWeatherState;
+        var rainEffectPrefab = ResourceManager.Instance.RainEffectPrefab;
+        var rainEffect = Instantiate(rainEffectPrefab, transform).transform;
+        rainEffect.name = rainEffectPrefab.name;
 
-        switch (currentWeatherState)
-        {
-            case WEATHER_STATE.LIGHT:
-
-                ModifyRain(40, 60, 20, 40);
-
-                ModifyWind(Vector3.forward, 0f);
-
-                RainSource.clip = Rain_light;
-
-                StartRain();
-
-                break;
-
-            case WEATHER_STATE.MEDIUM:
-
-                ModifyRain(60, 80, 40, 60);
-
-                ModifyWind(Vector3.forward, 0f);
-
-                RainSource.clip = Rain_medium;
-
-                StartRain();
-
-                break;
-
-            case WEATHER_STATE.HEAVY:
-
-                ModifyRain(100, 120, 60, 80);
-
-                ModifyWind(Vector3.forward, 0f);
-
-                RainSource.clip = Rain_heavy;
-
-                StartRain();
-
-                break;
-
-            case WEATHER_STATE.NONE:
-
-                StopRain();
-
-                break;
-
-            default:
-
-                break;
-        }
+        rainDropsEffect = rainEffect.Find("RainDrops").GetComponent<ParticleSystem>();
+        rainRipplesEffect = rainEffect.Find("RainRipples").GetComponent<ParticleSystem>();
+        dropsModule = rainDropsEffect.emission;
+        ripplesModule = rainRipplesEffect.emission;
+        velocityOverLifeTimeModule = rainDropsEffect.velocityOverLifetime;
     }
 
     private void StartRain()
@@ -149,6 +100,56 @@ public class WeatherManager : Singelton<WeatherManager>
         {
             RainSource.Play();
         }
+    }
+
+    public void ChangeWeatherState(WEATHER_STATE newWeatherState)
+    {
+        currentWeatherState = newWeatherState;
+
+        switch (currentWeatherState)
+        {
+            case WEATHER_STATE.LIGHT:
+
+                ModifyRain(40, 60, 20, 40);
+
+                ModifyWind(Vector3.forward, 0f);
+
+                RainSource.clip = Rain_light;
+
+                break;
+
+            case WEATHER_STATE.MEDIUM:
+
+                ModifyRain(60, 80, 40, 60);
+
+                ModifyWind(Vector3.forward, 0f);
+
+                RainSource.clip = Rain_medium;
+
+                break;
+
+            case WEATHER_STATE.HEAVY:
+
+                ModifyRain(100, 120, 60, 80);
+
+                ModifyWind(Vector3.forward, 0f);
+
+                RainSource.clip = Rain_heavy;
+
+                break;
+
+            case WEATHER_STATE.NONE:
+
+               
+
+                break;
+
+            default:
+
+                break;
+        }
+
+        StopRain();
     }
 
     public void StartWeather()

@@ -7,20 +7,19 @@ public class UIManager : Singelton<UIManager>
 {
     #region VARIABLES
 
-    [Header("HUD Variables")]
-    public Vector3 offset;
+    [Header("HUD Panel Variables")]
+    public Vector3 Offset;
     public float SmoothMultiplier;
 
     private Coroutine iShowHUD;
 
-    [SerializeField]
     private Image gameTimeFillImage; 
-    [SerializeField]
     private Image torchStrenghtFillImage; 
-    [SerializeField]
     private TextMeshProUGUI gameTimeText;
-    [SerializeField]
     private TextMeshProUGUI torchStrenghtText;
+
+    private Transform gameTimePanel, torchStrenghtPanel;
+
     #endregion VARIABLES
 
     #region PROPERTIES
@@ -68,7 +67,7 @@ public class UIManager : Singelton<UIManager>
 
     private void Awake()
     {
-        HUDCanvas = transform.Find("HUDCanvas");
+        Initialize();
     }
 
     private IEnumerator Start()
@@ -81,6 +80,21 @@ public class UIManager : Singelton<UIManager>
     #endregion UNITY_FUNCTIONS
 
     #region CUSTOM_FUNCTIONS
+
+    private void Initialize()
+    {
+        HUDCanvas = transform.Find("HUDCanvas");
+
+        var gameStats = HUDCanvas.Find("GameStats");
+
+        gameTimePanel = gameStats.Find("GameTimePanel");
+        torchStrenghtPanel = gameStats.Find("TorchStrenghtPanel");
+
+        gameTimeFillImage = gameTimePanel.GetComponentInChildren<Image>();
+        torchStrenghtFillImage = torchStrenghtPanel.GetComponentInChildren<Image>();
+        gameTimeText = gameTimePanel.GetComponentInChildren<TextMeshProUGUI>();
+        torchStrenghtText = torchStrenghtPanel.GetComponentInChildren<TextMeshProUGUI>();
+    }
 
     public void UpdateGameTime(float currentTime, float ratio)
     {
@@ -162,7 +176,7 @@ public class UIManager : Singelton<UIManager>
 
         while (HUDCanvas.gameObject.activeSelf)
         {
-            MoveHUD(target, HUDCanvas, offset, SmoothMultiplier);
+            MoveHUD(target, HUDCanvas, Offset, SmoothMultiplier);
             RotateHUD(target, HUDCanvas);
 
             yield return null;
