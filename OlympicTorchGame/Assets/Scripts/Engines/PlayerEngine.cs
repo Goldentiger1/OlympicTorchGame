@@ -3,6 +3,8 @@ using Valve.VR.InteractionSystem;
 
 public class PlayerEngine : Player
 {
+    #region VARIABLES
+
     public static PlayerEngine Instance 
     {
         get 
@@ -13,21 +15,27 @@ public class PlayerEngine : Player
 
     private Torch torch;
 
+    private Bubi bubi;
+
+    #endregion VARIABLES
+
+    #region PROPERTIES
+
     public Torch _Torch
     {
-        get 
+        get
         {
             return torch = torch ?? FindObjectOfType<Torch>();
         }
     }
 
-    private Bubi bubi;
-
-    public Bubi Bubi 
+    public Bubi Bubi
     {
         get
         {
-           return bubi = bubi ?? FindObjectOfType<Bubi>();
+            return bubi = bubi ?? FindObjectOfType<Bubi>();
         }
     }
+
+    #endregion PROPERTIES
 }

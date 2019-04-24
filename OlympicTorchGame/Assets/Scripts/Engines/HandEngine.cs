@@ -3,9 +3,15 @@ using Valve.VR.InteractionSystem;
 
 public class HandEngine : Hand
 {
+    #region VARIABLES
+
     private readonly int enemyLayerIndex = 13;
 
     //private readonly float minHitVelocityMagnitude = 2f;
+
+    #endregion VARIABLES
+
+    #region UNITY_FUNCTIONS
 
     private void OnTriggerEnter(Collider other) 
     {
@@ -31,4 +37,6 @@ public class HandEngine : Hand
     {
         
     }
+
+    #endregion UNITY_FUNCTIONS
 }
