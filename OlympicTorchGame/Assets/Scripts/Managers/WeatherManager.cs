@@ -1,16 +1,10 @@
 ﻿using System.Collections;
 using UnityEngine;
 
-public enum WEATHER_STATE
-{
-    NONE,
-    LIGHT,
-    MEDIUM,
-    HEAVY    
-};
-
 public class WeatherManager : Singelton<WeatherManager>
 {
+    #region VARIABLES
+
     private WEATHER_STATE currentWeatherState;
 
     [Header("General")]
@@ -35,10 +29,20 @@ public class WeatherManager : Singelton<WeatherManager>
     private ParticleSystem.EmissionModule ripplesModule;
     private ParticleSystem.VelocityOverLifetimeModule velocityOverLifeTimeModule;
 
-    private Vector3 windDirection;
-    private float windSpeed;
+    //private Vector3 windDirection;
+    //private float windSpeed;
 
-    private void Awake() 
+    #endregion VARIABLES
+
+    #region PROPERTIES
+
+
+
+    #endregion PROPERTIES
+
+    #region UNITY_FUNCTIONS
+
+    private void Awake()
     {
         var rainEffectPrefab = ResourceManager.Instance.RainEffectPrefab;
         var rainEffect = Instantiate(rainEffectPrefab, transform).transform;
@@ -70,6 +74,10 @@ public class WeatherManager : Singelton<WeatherManager>
             }
         }
     }
+
+    #endregion UNITY_FUNCTIONS
+
+    #region CUSTOM_FUNCTIONS
 
     public void ChangeWeatherState(WEATHER_STATE newWeatherState)
     {
@@ -103,7 +111,7 @@ public class WeatherManager : Singelton<WeatherManager>
 
             case WEATHER_STATE.HEAVY:
 
-                ModifyRain(100, 120 ,60, 80);
+                ModifyRain(100, 120, 60, 80);
 
                 ModifyWind(Vector3.forward, 0f);
 
@@ -122,7 +130,7 @@ public class WeatherManager : Singelton<WeatherManager>
             default:
 
                 break;
-        }    
+        }
     }
 
     private void StartRain()
@@ -180,10 +188,10 @@ public class WeatherManager : Singelton<WeatherManager>
         ripplesModule.rateOverTime = tempRippleCurve;
     }
 
-    private void ModifyWind(Vector3 newDirection, float newSpeed) 
+    private void ModifyWind(Vector3 newDirection, float newSpeed)
     {
-        windDirection = newDirection;
-        windSpeed = newSpeed;
+    //    windDirection = newDirection;
+    //    windSpeed = newSpeed;
 
         var newOrbitalValue = velocityOverLifeTimeModule.orbitalOffsetX;
         newOrbitalValue.constant = 10f;
@@ -215,4 +223,6 @@ public class WeatherManager : Singelton<WeatherManager>
             yield return new WaitForSeconds(windDuration);
         }
     }
+
+    #endregion CUSTOM_FUNCTIONS
 }

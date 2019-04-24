@@ -2,6 +2,8 @@
 
 public class FlipNormals : MonoBehaviour
 {
+    #region UNITY_FUNCTIONS
+
     private void Awake()
     {
         var meshFilter = GetComponent<MeshFilter>();
@@ -25,4 +27,6 @@ public class FlipNormals : MonoBehaviour
 
         meshFilter.sharedMesh.triangles = triangles;
     }
+
+    #endregion UNITY_FUNCTIONS
 }

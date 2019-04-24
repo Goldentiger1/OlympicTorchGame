@@ -2,15 +2,10 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public enum GAME_STATE
-{
-    START,
-    RUN,
-    END
-}
-
 public class GameManager : Singelton<GameManager>
 {
+    #region VARIABLES
+
     [Header("Variables")]
     public float LevelTime = 60f;
     public bool OlympicFlameStarted;
@@ -21,6 +16,10 @@ public class GameManager : Singelton<GameManager>
     public AudioClip Lose;
 
     private bool gameIsCreated;
+
+    #endregion VARIABLES
+
+    #region PROPERTIES
 
     public GAME_STATE CurrentGameState
     {
@@ -42,6 +41,10 @@ public class GameManager : Singelton<GameManager>
         }
     }
 
+    #endregion PROPERTIES
+
+    #region UNITY_FUNCTIONS
+
     private void Start()
     {
         StartLevelTime = LevelTime;
@@ -49,12 +52,16 @@ public class GameManager : Singelton<GameManager>
         ChangeGameState(GAME_STATE.START);
     }
 
+    #endregion UNITY_FUNCTIONS
+
+    #region CUSTOM_FUNCTIONS
+
     private void LoadScene(int sceneIndex)
     {
-        SceneManager.LoadScene(sceneIndex);     
+        SceneManager.LoadScene(sceneIndex);
     }
 
-    public void ChangeGameState(GAME_STATE newState) 
+    public void ChangeGameState(GAME_STATE newState)
     {
         CurrentGameState = newState;
 
@@ -101,14 +108,14 @@ public class GameManager : Singelton<GameManager>
             // Torch
             var torchPrefab = ResourceManager.Instance.TorchPrefab;
             var torch = Instantiate(
-                torchPrefab, 
+                torchPrefab,
                 PlayerEngine.Instance.feetPositionGuess + Vector3.forward,
                 Quaternion.identity,
                 transform);
             torch.name = torchPrefab.name;
 
-            WeatherManager.Instance.StartWeather(); 
-        }     
+            WeatherManager.Instance.StartWeather();
+        }
 
         return gameIsCreated = true;
     }
@@ -134,9 +141,9 @@ public class GameManager : Singelton<GameManager>
         {
             ratio = LevelTime / StartLevelTime;
             LevelTime -= Time.deltaTime;
-            UIManager.Instance.UpdateGameTime(LevelTime, ratio);        
+            UIManager.Instance.UpdateGameTime(LevelTime, ratio);
 
-            if(LevelTime <= 0)
+            if (LevelTime <= 0)
             {
                 TimeToStartFire = true;
 
@@ -152,10 +159,10 @@ public class GameManager : Singelton<GameManager>
     }
 
     private IEnumerator IEnd()
-    {     
+    {
         UIManager.Instance.GameTimeText = OlympicFlameStarted ? "VICTORY!" : "GAME OVER!";
         AudioSource.PlayClipAtPoint(OlympicFlameStarted ? Victory : Lose, PlayerEngine.Instance.feetPositionGuess + Vector3.up);
-      
+
         yield return new WaitForSeconds(4f);
 
         UIManager.Instance.GameTimeText = "RESTARTING...";
@@ -166,4 +173,6 @@ public class GameManager : Singelton<GameManager>
 
         //ChangeGameState(GAME_STATE.START);
     }
+
+    #endregion CUSTOM_FUNCTIONS
 }

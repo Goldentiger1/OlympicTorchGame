@@ -1,10 +1,11 @@
 ﻿using System.Collections;
-using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class UIManager : Singelton<UIManager>
 {
+    #region VARIABLES
+
     [Header("HUD Variables")]
     public Vector3 offset;
     public float SmoothMultiplier;
@@ -16,9 +17,12 @@ public class UIManager : Singelton<UIManager>
     [SerializeField]
     private Image torchStrenghtFillImage; 
     [SerializeField]
-    private TextMeshProUGUI gameTimeText;
+    private Text gameTimeText;
     [SerializeField]
-    private TextMeshProUGUI torchStrenghtText;
+    private Text torchStrenghtText;
+    #endregion VARIABLES
+
+    #region PROPERTIES
 
     public string GameTimeText
     {
@@ -57,6 +61,10 @@ public class UIManager : Singelton<UIManager>
         private set;
     }
 
+    #endregion PROPERTIES
+
+    #region UNITY_FUNCTIONS
+
     private void Awake()
     {
         HUDCanvas = transform.Find("HUDCanvas");
@@ -68,6 +76,10 @@ public class UIManager : Singelton<UIManager>
 
         ShowHUD(HudStartPosition, 1f, GameManager.Instance.StartLevelTime);
     }
+
+    #endregion UNITY_FUNCTIONS
+
+    #region CUSTOM_FUNCTIONS
 
     public void UpdateGameTime(float currentTime, float ratio)
     {
@@ -155,4 +167,6 @@ public class UIManager : Singelton<UIManager>
             yield return null;
         }
     }
+
+    #endregion CUSTOM_FUNCTIONS
 }

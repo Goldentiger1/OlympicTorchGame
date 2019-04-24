@@ -2,6 +2,8 @@
 
 public class ResourceManager : Singelton<ResourceManager>
 {
+    #region VARIABLES
+
     [Header("Characters")]
     public GameObject PlayerPrefab;
     public GameObject BubiPrefab;
@@ -12,4 +14,6 @@ public class ResourceManager : Singelton<ResourceManager>
 
     [Header("Others")]
     public GameObject TorchPrefab;
+
+    #endregion VARIABLES
 }
