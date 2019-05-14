@@ -1,128 +1,8 @@
 fileFormatVersion: 2
-guid: 32aa05f23c355834cad6740a1c524077
+guid: 76a09ec145a156644867c422a6351a29
 ModelImporter:
   serializedVersion: 25
-  internalIDToNameTable:
-  - first:
-      1: 100000
-    second: Alusta
-  - first:
-      1: 100002
-    second: Jalka
-  - first:
-      1: 100004
-    second: Jalka001
-  - first:
-      1: 100006
-    second: Jalka002
-  - first:
-      1: 100008
-    second: Jalka003
-  - first:
-      1: 100010
-    second: Jalka004
-  - first:
-      1: 100012
-    second: //RootNode
-  - first:
-      1: 100014
-    second: "P\xF6ntt\xF6"
-  - first:
-      4: 400000
-    second: Alusta
-  - first:
-      4: 400002
-    second: Jalka
-  - first:
-      4: 400004
-    second: Jalka001
-  - first:
-      4: 400006
-    second: Jalka002
-  - first:
-      4: 400008
-    second: Jalka003
-  - first:
-      4: 400010
-    second: Jalka004
-  - first:
-      4: 400012
-    second: //RootNode
-  - first:
-      4: 400014
-    second: "P\xF6ntt\xF6"
-  - first:
-      21: 2100000
-    second: 'Material #3'
-  - first:
-      21: 2100002
-    second: 'Material #2'
-  - first:
-      21: 2100004
-    second: 'Material #4'
-  - first:
-      23: 2300000
-    second: Alusta
-  - first:
-      23: 2300002
-    second: Jalka
-  - first:
-      23: 2300004
-    second: Jalka001
-  - first:
-      23: 2300006
-    second: Jalka002
-  - first:
-      23: 2300008
-    second: Jalka003
-  - first:
-      23: 2300010
-    second: Jalka004
-  - first:
-      23: 2300012
-    second: "P\xF6ntt\xF6"
-  - first:
-      33: 3300000
-    second: Alusta
-  - first:
-      33: 3300002
-    second: Jalka
-  - first:
-      33: 3300004
-    second: Jalka001
-  - first:
-      33: 3300006
-    second: Jalka002
-  - first:
-      33: 3300008
-    second: Jalka003
-  - first:
-      33: 3300010
-    second: Jalka004
-  - first:
-      33: 3300012
-    second: "P\xF6ntt\xF6"
-  - first:
-      43: 4300000
-    second: Alusta
-  - first:
-      43: 4300002
-    second: Jalka
-  - first:
-      43: 4300004
-    second: "P\xF6ntt\xF6"
-  - first:
-      43: 4300006
-    second: Jalka001
-  - first:
-      43: 4300008
-    second: Jalka002
-  - first:
-      43: 4300010
-    second: Jalka003
-  - first:
-      43: 4300012
-    second: Jalka004
+  internalIDToNameTable: []
   externalObjects: {}
   materials:
     importMaterials: 1
@@ -151,10 +31,10 @@ ModelImporter:
     extraExposedTransformPaths: []
     extraUserProperties: []
     clipAnimations: []
-    isReadable: 1
+    isReadable: 0
   meshes:
     lODScreenPercentages: []
-    globalScale: 0.5
+    globalScale: 1
     meshCompression: 0
     addColliders: 0
     useSRGBMaterialColor: 1
@@ -200,7 +80,7 @@ ModelImporter:
     armStretch: 0.05
     legStretch: 0.05
     feetSpacing: 0
-    globalScale: 0.0127
+    globalScale: 1
     rootMotionBoneName: 
     hasTranslationDoF: 0
     hasExtraRoot: 0
