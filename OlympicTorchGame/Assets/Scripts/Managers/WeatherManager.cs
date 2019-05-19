@@ -110,7 +110,7 @@ public class WeatherManager : Singelton<WeatherManager>
         {
             case WEATHER_STATE.LIGHT:
 
-                ModifyRain(40, 60, 20, 40);
+                ModifyRain(400, 600, 200, 400);
 
                 ModifyWind(Vector3.forward, 0f);
 
@@ -120,7 +120,7 @@ public class WeatherManager : Singelton<WeatherManager>
 
             case WEATHER_STATE.MEDIUM:
 
-                ModifyRain(60, 80, 40, 60);
+                ModifyRain(600, 800, 400, 600);
 
                 ModifyWind(Vector3.forward, 0f);
 
@@ -130,7 +130,7 @@ public class WeatherManager : Singelton<WeatherManager>
 
             case WEATHER_STATE.HEAVY:
 
-                ModifyRain(100, 120, 60, 80);
+                ModifyRain(800, 1000, 600, 800);
 
                 ModifyWind(Vector3.forward, 0f);
 
@@ -149,7 +149,7 @@ public class WeatherManager : Singelton<WeatherManager>
                 break;
         }
 
-        StopRain();
+        StartRain();
     }
 
     public void StartWeather()
