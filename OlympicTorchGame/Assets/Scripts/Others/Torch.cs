@@ -156,7 +156,7 @@ public class Torch : MonoBehaviour
             UIManager.Instance.UpdateTorchStrenght(FlameStrenght, ratio);
            
             emission.rateOverTime = ratio * startRateOverTime;
-            print(emission.rateOverTime.constant);
+            //print(emission.rateOverTime.constant);
 
             yield return null;
         }

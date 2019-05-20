@@ -124,7 +124,7 @@ public class Bubi : Bird
         {
             if (Target == null) 
             {
-                Target = PlayerEngine.Instance._Torch.transform;
+                Target = PlayerEngine.Instance.Torch.transform;
 
                 if(Target == null) 
                 {
@@ -144,7 +144,7 @@ public class Bubi : Bird
             {
                 animator.SetTrigger("Attack");
 
-                PlayerEngine.Instance._Torch.ModifyFlameStrenght(-50f);
+                PlayerEngine.Instance.Torch.ModifyFlameStrenght(-50f);
 
                 yield return new WaitForSeconds(2f);
 

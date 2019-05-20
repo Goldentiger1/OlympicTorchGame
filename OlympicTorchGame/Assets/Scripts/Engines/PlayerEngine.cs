@@ -5,7 +5,7 @@ public class PlayerEngine : Player
 {
     #region VARIABLES
 
-    public static PlayerEngine Instance 
+    public static PlayerEngine Instance
     {
         get 
         {
@@ -21,7 +21,7 @@ public class PlayerEngine : Player
 
     #region PROPERTIES
 
-    public Torch _Torch
+    public Torch Torch
     {
         get
         {
