@@ -6,10 +6,10 @@ public class WeatherManager : Singelton<WeatherManager>
     #region VARIABLES
 
     [Header("General")]
+    public bool ShowGizmos = true;
     public WEATHER_STATE WeatherState;
 
     [Header("Wind")]
-    public bool ShowWindPoints = true;
     public Vector3[] WindPoints;
     private Vector3 currentWindPoint;
 
@@ -36,7 +36,18 @@ public class WeatherManager : Singelton<WeatherManager>
 
     #region PROPERTIES
 
+    public bool WeHitCoverZone
+    {
+        get 
+        {
+            if(Physics.Raycast(WindSource.transform.position, Vector3.forward * 100f))
+            {
+                
+            }
 
+            return false;
+        }
+    }
 
     #endregion PROPERTIES
 
@@ -54,7 +65,7 @@ public class WeatherManager : Singelton<WeatherManager>
 
     private void OnDrawGizmos()
     {
-        if (ShowWindPoints)
+        if (ShowGizmos)
         {
             Gizmos.color = Color.blue;
 
@@ -64,6 +75,9 @@ public class WeatherManager : Singelton<WeatherManager>
                 Gizmos.DrawLine(currentWindPoint + Vector3.forward * 0.2f, currentWindPoint + Vector3.back * 0.2f);
                 Gizmos.DrawLine(currentWindPoint + Vector3.right * 0.2f, currentWindPoint + Vector3.left * 0.2f);
             }
+
+            
+
         }
     }
 
@@ -82,6 +96,11 @@ public class WeatherManager : Singelton<WeatherManager>
         dropsModule = rainDropsEffect.emission;
         ripplesModule = rainRipplesEffect.emission;
         velocityOverLifeTimeModule = rainDropsEffect.velocityOverLifetime;
+    }
+
+    private void Foo()
+    {
+      
     }
 
     private void StartRain()
@@ -140,7 +159,7 @@ public class WeatherManager : Singelton<WeatherManager>
 
             case WEATHER_STATE.NONE:
 
-               
+            StopRain();
 
                 break;
 
@@ -191,8 +210,8 @@ public class WeatherManager : Singelton<WeatherManager>
 
     private void ModifyWind(Vector3 newDirection, float newSpeed)
     {
-    //    windDirection = newDirection;
-    //    windSpeed = newSpeed;
+        //    windDirection = newDirection;
+        //    windSpeed = newSpeed;
 
         var newOrbitalValue = velocityOverLifeTimeModule.orbitalOffsetX;
         newOrbitalValue.constant = 10f;
@@ -202,6 +221,11 @@ public class WeatherManager : Singelton<WeatherManager>
     private void ChangeWindSourcePosition(Vector3 position)
     {
         WindSource.transform.position = position;
+
+        // Rotate local forward vector to look at World center position
+        WindSource.transform.LookAt(Vector3.zero);
+        // Convert direction -> local to world
+        WindSource.transform.InverseTransformDirection(WindSource.transform.localPosition);
     }
 
     private IEnumerator IChangeWind()

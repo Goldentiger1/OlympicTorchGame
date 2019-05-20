@@ -8,6 +8,7 @@ public class Torch : MonoBehaviour
 
     [Header("Variables")]
     [Range(0, 100)]
+    public BoxCollider CoverZones;
     public float FlameStrenght = 100f;
     public float FireStartDuration = 6f;
     private float currentFireStartDuration;
@@ -15,6 +16,7 @@ public class Torch : MonoBehaviour
 
     [Header("UI")]
     public Image FireCounterImage;
+    public Image FireStrenghtImage_Fill;
 
     private Transform flamingPart;
     private ParticleSystem torchFlameEffect;
@@ -153,8 +155,10 @@ public class Torch : MonoBehaviour
             FlameStrenght -= Time.deltaTime;
 
             ratio = FlameStrenght / startFlameStrenght;
+
             UIManager.Instance.UpdateTorchStrenght(FlameStrenght, ratio);
-           
+            FireStrenghtImage_Fill.fillAmount = ratio;
+   
             emission.rateOverTime = ratio * startRateOverTime;
             //print(emission.rateOverTime.constant);
 

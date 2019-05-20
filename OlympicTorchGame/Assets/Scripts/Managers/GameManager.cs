@@ -161,6 +161,8 @@ public class GameManager : Singelton<GameManager>
 
     private IEnumerator IEnd()
     {
+        WeatherManager.Instance.ChangeWeatherState(WEATHER_STATE.NONE);
+
         UIManager.Instance.GameTimeText = OlympicFlameStarted ? "VICTORY!" : "GAME OVER!";
         AudioSource.PlayClipAtPoint(OlympicFlameStarted ? Victory : Lose, PlayerEngine.Instance.feetPositionGuess + Vector3.up);
 

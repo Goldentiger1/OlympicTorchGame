@@ -5,6 +5,9 @@ public class Bubi : Bird
 {
     private Coroutine idle, roam, attack, withdraw;
 
+    [Header("General")]
+    public float Damage = 5;
+
     [Header("Audio")]
     public AudioClip AttackClip;
     public AudioClip HitClip;
@@ -144,7 +147,7 @@ public class Bubi : Bird
             {
                 animator.SetTrigger("Attack");
 
-                PlayerEngine.Instance.Torch.ModifyFlameStrenght(-50f);
+                PlayerEngine.Instance.Torch.ModifyFlameStrenght(-Damage);
 
                 yield return new WaitForSeconds(2f);
 
