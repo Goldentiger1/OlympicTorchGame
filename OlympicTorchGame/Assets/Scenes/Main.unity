@@ -2063,10 +2063,10 @@ MonoBehaviour:
   WeatherState: 3
   ShowWindPoints: 1
   WindPoints:
-  - {x: 2, y: 0, z: 0.2}
-  - {x: -2, y: 0, z: 0.2}
-  - {x: 0, y: 0, z: 1.6}
-  - {x: 0, y: 0, z: -1}
+  - {x: 4, y: 0, z: 0}
+  - {x: -4, y: 0, z: 0}
+  - {x: 0, y: 0, z: 4}
+  - {x: 0, y: 0, z: -4}
   Rain_light: {fileID: 8300000, guid: c980eda1ec9b9ff4b930005976b00f41, type: 3}
   Rain_medium: {fileID: 8300000, guid: 3359e9d10af08ca46ae396298dbd1ed9, type: 3}
   Rain_heavy: {fileID: 8300000, guid: db1471092e49b7445bfbd374a17ea61a, type: 3}
