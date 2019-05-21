@@ -1055,6 +1055,7 @@ GameObject:
   - component: {fileID: 2367477939782105033}
   - component: {fileID: 4198533471149535244}
   - component: {fileID: 5864840951183031912}
+  - component: {fileID: 8830295791424558000}
   m_Layer: 11
   m_Name: Torch
   m_TagString: Untagged
@@ -1320,6 +1321,20 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &8830295791424558000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8002557792560109956}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d37c2cf88f7c59f4c8cf5d3812568143, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  index: 6
+  origin: {fileID: 0}
 --- !u!1001 &5672081891859600804
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1327,6 +1342,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2751493968044933198}
     m_Modifications:
+    - target: {fileID: 100000, guid: a5081fc92b2329c4e93c8a7e812f6780, type: 3}
+      propertyPath: m_Name
+      value: Stick_Place_Holder
+      objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: a5081fc92b2329c4e93c8a7e812f6780, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -1382,10 +1401,6 @@ PrefabInstance:
     - target: {fileID: 400000, guid: a5081fc92b2329c4e93c8a7e812f6780, type: 3}
       propertyPath: m_LocalScale.z
       value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 100000, guid: a5081fc92b2329c4e93c8a7e812f6780, type: 3}
-      propertyPath: m_Name
-      value: Stick_Place_Holder
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a5081fc92b2329c4e93c8a7e812f6780, type: 3}
