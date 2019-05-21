@@ -10,8 +10,8 @@ public class WeatherManager : Singelton<WeatherManager>
     public WEATHER_STATE WeatherState;
 
     [Header("Wind")]
-    public Vector3[] WindPoints;
-    private Vector3 currentWindPoint;
+    public float Radius;
+    public float Frequency = 1;
 
     [Header("Audio")]
     public AudioClip Rain_light;
@@ -36,19 +36,6 @@ public class WeatherManager : Singelton<WeatherManager>
 
     #region PROPERTIES
 
-    public bool WeHitCoverZone
-    {
-        get 
-        {
-            if(Physics.Raycast(WindSource.transform.position, Vector3.forward * 100f))
-            {
-                
-            }
-
-            return false;
-        }
-    }
-
     #endregion PROPERTIES
 
     #region UNITY_FUNCTIONS
@@ -60,25 +47,17 @@ public class WeatherManager : Singelton<WeatherManager>
 
     private void Start()
     {
-        StartCoroutine(IChangeWind());
+        StartCoroutine(IStartWind());
+    }
+
+    private void Update()
+    {
+        
     }
 
     private void OnDrawGizmos()
     {
-        if (ShowGizmos)
-        {
-            Gizmos.color = Color.blue;
-
-            for (int i = 0; i < WindPoints.Length; i++)
-            {
-                currentWindPoint = WindPoints[i];
-                Gizmos.DrawLine(currentWindPoint + Vector3.forward * 0.2f, currentWindPoint + Vector3.back * 0.2f);
-                Gizmos.DrawLine(currentWindPoint + Vector3.right * 0.2f, currentWindPoint + Vector3.left * 0.2f);
-            }
-
-            
-
-        }
+       
     }
 
     #endregion UNITY_FUNCTIONS
@@ -96,11 +75,6 @@ public class WeatherManager : Singelton<WeatherManager>
         dropsModule = rainDropsEffect.emission;
         ripplesModule = rainRipplesEffect.emission;
         velocityOverLifeTimeModule = rainDropsEffect.velocityOverLifetime;
-    }
-
-    private void Foo()
-    {
-      
     }
 
     private void StartRain()
@@ -181,7 +155,6 @@ public class WeatherManager : Singelton<WeatherManager>
         if (rainDropsEffect.isPlaying == true)
         {
             rainDropsEffect.Stop();
-            print(rainDropsEffect.isStopped);
         }
 
         if (rainRipplesEffect.isPlaying == true)
@@ -209,43 +182,23 @@ public class WeatherManager : Singelton<WeatherManager>
     }
 
     private void ModifyWind(Vector3 newDirection, float newSpeed)
-    {
-        //    windDirection = newDirection;
-        //    windSpeed = newSpeed;
-
+    {      
         var newOrbitalValue = velocityOverLifeTimeModule.orbitalOffsetX;
         newOrbitalValue.constant = 10f;
         velocityOverLifeTimeModule.orbitalOffsetX = newOrbitalValue;
     }
 
-    private void ChangeWindSourcePosition(Vector3 position)
-    {
-        WindSource.transform.position = position;
-
-        // Rotate local forward vector to look at World center position
-        WindSource.transform.LookAt(Vector3.zero);
-        // Convert direction -> local to world
-        WindSource.transform.InverseTransformDirection(WindSource.transform.localPosition);
-    }
-
-    private IEnumerator IChangeWind()
+    private IEnumerator IStartWind()
     {
         while (currentWeatherState.Equals(WEATHER_STATE.NONE) == false)
         {
-            var nextWind = Random.Range(2f, 6f);
+            var t = Time.time / Frequency;
+            float noise = Mathf.PerlinNoise(t, t) * 2 - 1;
+            var v = Vector3.forward * Radius;
+            var rot = Quaternion.Euler(0, noise * 180, 0);
+            WindSource.transform.localPosition = rot * v;
 
-            var randomWindPosition = WindPoints[Random.Range(0, WindPoints.Length)];
-            ChangeWindSourcePosition(randomWindPosition);
-
-            yield return new WaitForSeconds(nextWind);
-
-            var windDuration = Random.Range(2f, 3f);
-
-            // FIX ME!!
-
-            //ModifyWind(currentWindPoint, 20f);
-
-            yield return new WaitForSeconds(windDuration);
+            yield return null;
         }
     }
 
