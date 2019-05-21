@@ -9,6 +9,10 @@ public class WeatherManager : Singelton<WeatherManager>
     public bool ShowGizmos = true;
     public WEATHER_STATE WeatherState;
 
+    Vector3 origin;
+    Vector3 direction;
+    Ray ray = new Ray();
+
     [Header("Wind")]
     public float Radius;
     public float Frequency = 1;
@@ -29,11 +33,6 @@ public class WeatherManager : Singelton<WeatherManager>
     private ParticleSystem rainRipplesEffect;
     private ParticleSystem.EmissionModule dropsModule;
     private ParticleSystem.EmissionModule ripplesModule;
-    //private ParticleSystem.VelocityOverLifetimeModule velocityOverLifeTimeModule;
-    private ParticleSystem.ShapeModule shapeModule;
-
-    //private Vector3 windDirection;
-    //private float windSpeed;
 
     #endregion VARIABLES
 
@@ -73,8 +72,6 @@ public class WeatherManager : Singelton<WeatherManager>
         rainRipplesEffect = RainEffect.Find("RainRipples").GetComponent<ParticleSystem>();
         dropsModule = rainDropsEffect.emission;
         ripplesModule = rainRipplesEffect.emission;
-        //velocityOverLifeTimeModule = rainDropsEffect.velocityOverLifetime;
-        shapeModule = rainDropsEffect.shape;
     }
 
     private void StartRain()
@@ -175,25 +172,28 @@ public class WeatherManager : Singelton<WeatherManager>
         ripplesModule.rateOverTime = tempRippleCurve;
     }
 
-    private void ModifyWindDirection()
-    {
-        CurrentWindDirection = WindSource.transform.position;
-        shapeModule.rotation = CurrentWindDirection;
-    }
-
     private IEnumerator IStartWind()
     {
+        var t = Time.time / Frequency;
+        var noise = Mathf.PerlinNoise(t, t) * 2 - 1;
+        var v = Vector3.forward * Radius;
+        var rot = Quaternion.Euler(0, noise * 180, 0);
+
         while (currentWeatherState.Equals(WEATHER_STATE.NONE) == false)
         {
-            var t = Time.time / Frequency;
-            var noise = Mathf.PerlinNoise(t, t) * 2 - 1;
-            var v = Vector3.forward * Radius;
-            var rot = Quaternion.Euler(0, noise * 180, 0);
+            t = Time.time / Frequency;
+            noise = Mathf.PerlinNoise(t, t) * 2 - 1;
+            v = Vector3.forward * Radius;
+            rot = Quaternion.Euler(0, noise * 180, 0);
+
             WindSource.transform.localPosition = rot * v;
 
-            WindSource.transform.rotation = Quaternion.LookRotation(WindSource.transform.position - WindSource.transform.forward);
+            WindSource.transform.LookAt(PlayerEngine.Instance.Torch.FirePoint/*Vector3.zero*/);
 
-            ModifyWindDirection();
+            // rainDropsEffect.transform.LookAt(Vector3.zero);
+
+            rainDropsEffect.transform.rotation = Quaternion.LookRotation(WindSource.transform.forward);
+           
 
             yield return null;
         }

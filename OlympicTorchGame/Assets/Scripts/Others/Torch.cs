@@ -9,8 +9,10 @@ public class Torch : MonoBehaviour
     [Header("Variables")]
     [Range(0, 100)]
     public float FlameStrenght = 100f;
-    public float FireStartDuration = 6f;
-    public LayerMask HandCoverMask;
+    public float BurnRateMultiplier = 4f;
+    public float IgniteCauldronDuration = 6f;
+    public float RayMaDistance = 100f;
+    public LayerMask HitLayerMask;
     private float currentFireStartDuration;
     private float startFlameStrenght;
 
@@ -18,8 +20,8 @@ public class Torch : MonoBehaviour
     public Image FireCounterImage;
     public Image FireStrenghtImage_Fill;
 
-    private Transform flamingPart;
     private ParticleSystem torchFlameEffect;
+    private ParticleSystem.VelocityOverLifetimeModule velocityOverLifetimeModule;
 
     private float startRateOverTime;
     public float SliderValue;
@@ -32,6 +34,12 @@ public class Torch : MonoBehaviour
 
     #region PROPERTIES
 
+    public Transform FirePoint
+    {
+        get;
+        private set;
+    }
+
     public bool IsBurning
     {
         get
@@ -40,18 +48,24 @@ public class Torch : MonoBehaviour
         }
     }
 
+    public bool IsHandInsideFire
+    {
+        get;
+        private set;
+    }
+
     #endregion PROPERTIES
 
     #region UNITY_FUNCTIONS
 
     private void Awake()
     {
-        flamingPart = transform.Find("FlamingPart");
+        FirePoint = transform.Find("FirePoint");
     }
 
     private void Start()
     {
-        currentFireStartDuration = FireStartDuration;
+        currentFireStartDuration = IgniteCauldronDuration;
         startFlameStrenght = FlameStrenght;
 
         FireCounterImage.enabled = false;
@@ -73,10 +87,17 @@ public class Torch : MonoBehaviour
 
                 if (GameManager.Instance.TimeToStartFire)
                 {
-                    StartFire(other.bounds.center, FireStartDuration);
+                    StartFire(other.bounds.center, IgniteCauldronDuration);
                 }
 
                 break;
+
+            // Hand layer index
+            case 14:
+
+            IsHandInsideFire = true;
+
+            break;
 
             default:
 
@@ -103,6 +124,13 @@ public class Torch : MonoBehaviour
                 }
 
                 break;
+
+            // Hand layer index
+            case 14:
+
+            IsHandInsideFire = false;
+
+            break;
 
             default:
 
@@ -142,44 +170,68 @@ public class Torch : MonoBehaviour
 
     private IEnumerator ILifeTime()
     {
-        SpawnFireEffect(ResourceManager.Instance.FireEffectPrefab, flamingPart.position, flamingPart);
+        SpawnFireEffect(ResourceManager.Instance.FireEffectPrefab, FirePoint.position, FirePoint);
 
-        torchFlameEffect = flamingPart.GetComponentInChildren<ParticleSystem>();
+        torchFlameEffect = FirePoint.GetComponentInChildren<ParticleSystem>();
+
         var emission = torchFlameEffect.emission;
         startRateOverTime = emission.rateOverTime.constant;
 
         var ratio = FlameStrenght / startFlameStrenght;
 
+        var origin = WeatherManager.Instance.WindSource.transform.position;
+        var direction = WeatherManager.Instance.WindSource.transform.forward;
+
+        var ray = new Ray(origin, direction);
+
+        var hit = new RaycastHit();
+
+        velocityOverLifetimeModule = torchFlameEffect.velocityOverLifetime;
+
         while (IsBurning)
         {
-            Ray ray = new Ray(flamingPart.position, WeatherManager.Instance.WindSource.transform.position);
-            if(Physics.Raycast(ray, out RaycastHit hit, HandCoverMask))
+            origin = WeatherManager.Instance.WindSource.transform.position;
+            direction = WeatherManager.Instance.WindSource.transform.forward;
+
+            ray.origin = origin;
+            ray.direction = direction;
+
+
+            //Debug.DrawRay(ray.origin, ray.direction * RayMaDistance, Color.blue);
+
+            // !!!
+            if (Physics.Raycast(origin, direction, out hit, RayMaDistance, HitLayerMask) && IsHandInsideFire == false)
             {
-                Debug.DrawLine(flamingPart.position, WeatherManager.Instance.WindSource.transform.position, Color.red);
+                Debug.DrawLine(origin, FirePoint.transform.position, Color.red);
+
+                if(hit.collider != null)
+                print(hit.collider.name);
             } 
             else
             {
-                Debug.LogWarning("!!!!");
-                Debug.DrawLine(flamingPart.position, WeatherManager.Instance.WindSource.transform.position, Color.white);
+                ratio = FlameStrenght / startFlameStrenght;
+                UIManager.Instance.UpdateTorchStrenght(FlameStrenght, ratio);
+                FireStrenghtImage_Fill.fillAmount = ratio;
+
+                emission.rateOverTime = ratio * startRateOverTime;
+
+                FlameStrenght -= Time.deltaTime * BurnRateMultiplier;
+
+                Debug.DrawLine(origin, FirePoint.transform.position, Color.white);
+
+                torchFlameEffect.transform.rotation = Quaternion.LookRotation(WeatherManager.Instance.WindSource.transform.forward);
             }
-                         
-            Debug.DrawLine(flamingPart.position, WeatherManager.Instance.WindSource.transform.position, Color.red);
 
-            FlameStrenght -= Time.deltaTime;
+            
 
-            ratio = FlameStrenght / startFlameStrenght;
+            // Debug.DrawRay(ray.origin, ray.direction * RayMaDistance, isEffeecting ? Color.red : Color.white);
 
-            UIManager.Instance.UpdateTorchStrenght(FlameStrenght, ratio);
-            FireStrenghtImage_Fill.fillAmount = ratio;
-   
-            emission.rateOverTime = ratio * startRateOverTime;
-            //print(emission.rateOverTime.constant);
 
             yield return null;
         }
 
         UIManager.Instance.UpdateTorchStrenght(FlameStrenght, 0f);
-        flamingPart.gameObject.SetActive(false);
+        FirePoint.gameObject.SetActive(false);
         GameManager.Instance.ChangeGameState(GAME_STATE.END);
 
         iStartLifeTime = null;
@@ -196,7 +248,7 @@ public class Torch : MonoBehaviour
 
         while (startingFire && IsBurning)
         {
-            ratio = currentFireStartDuration / FireStartDuration;
+            ratio = currentFireStartDuration / IgniteCauldronDuration;
 
             currentFireStartDuration -= Time.deltaTime;
 

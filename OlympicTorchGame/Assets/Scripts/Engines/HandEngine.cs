@@ -5,7 +5,7 @@ public class HandEngine : Hand
 {
     #region VARIABLES
 
-
+    private SphereCollider handCollider;
 
     private readonly int enemyLayerIndex = 13;
     private readonly float cooldownDuration = 4f;
@@ -16,6 +16,13 @@ public class HandEngine : Hand
     #endregion VARIABLES
 
     #region UNITY_FUNCTIONS
+
+    protected override void Awake()
+    {
+        base.Awake();
+
+        handCollider = GetComponent<SphereCollider>();
+    }
 
     private void OnTriggerEnter(Collider other) 
     {
@@ -35,25 +42,43 @@ public class HandEngine : Hand
         
     }
 
+    protected override void OnDrawGizmos()
+    {
+        base.OnDrawGizmos();
+
+        if(handCollider == null)
+        {
+            return;
+        }
+
+        Gizmos.color = Color.green;
+        Gizmos.DrawWireSphere(transform.position, handCollider.radius);
+    }
+
+    #endregion UNITY_FUNCTIONS
+
+    #region CUSTOM_FUNCTIONS
+
+
     private void CheckHitForce()
     {
         if (Player.instance.rigSteamVR.activeSelf == false)
             return;
 
-            // !!!!!!!
-            //var currentVelocityMagnitude = GetTrackedObjectVelocity().magnitude;
-            //print(currentVelocityMagnitude);
+        // !!!!!!!
+        //var currentVelocityMagnitude = GetTrackedObjectVelocity().magnitude;
+        //print(currentVelocityMagnitude);
 
-            //if(currentVelocityMagnitude >= minHitVelocityMagnitude) 
-            //{
-            //    PlayerEngine.Instance.Bubi.Change_AI_State(AI_STATE.WITHDRAW);
-            //}
-        }
+        //if(currentVelocityMagnitude >= minHitVelocityMagnitude) 
+        //{
+        //    PlayerEngine.Instance.Bubi.Change_AI_State(AI_STATE.WITHDRAW);
+        //}
+    }
 
     private void AttackCooldown()
     {
         canAttack = true;
     }
 
-    #endregion UNITY_FUNCTIONS
+    #endregion CUSTOM_FUNCTIONS
 }

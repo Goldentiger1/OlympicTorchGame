@@ -10,11 +10,14 @@ public class GameManager : Singelton<GameManager>
     public float LevelTime = 60f;
     public bool OlympicFlameStarted;
     public bool TimeToStartFire = false;
+
+    [Header("References")]
     public Transform OlympicCauldron;
 
     [Header("Audio")]
     public AudioClip Victory;
     public AudioClip Lose;
+    public AudioClip Fanfare;
 
     private bool gameIsCreated;
 
@@ -149,6 +152,8 @@ public class GameManager : Singelton<GameManager>
                 TimeToStartFire = true;
 
                 UIManager.Instance.GameTimeText = "START FIRE";
+
+                AudioSource.PlayClipAtPoint(Fanfare, PlayerEngine.Instance.feetPositionGuess + Vector3.up);
 
                 yield return new WaitUntil(() => OlympicFlameStarted);
 
