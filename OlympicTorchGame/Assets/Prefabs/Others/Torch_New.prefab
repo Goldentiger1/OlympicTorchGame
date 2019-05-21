@@ -71,7 +71,7 @@ MonoBehaviour:
   RayMaDistance: 100
   HitLayerMask:
     serializedVersion: 2
-    m_Bits: 16384
+    m_Bits: 81920
   FireCounterImage: {fileID: 7719099473244294299}
   FireStrenghtImage_Fill: {fileID: 5222444897985257012}
   SliderValue: 0

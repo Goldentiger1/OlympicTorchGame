@@ -37,6 +37,14 @@ public class Bubi : Bird
         Change_AI_State(AI_STATE.ROAM);
     }
 
+    private void OnTriggerEnter(Collider other)
+    {
+        if(other.gameObject.layer == 16)
+        {
+            Change_AI_State(AI_STATE.WITHDRAW);
+        }
+    }
+
     protected override void Idle() 
     {
         base.Idle();

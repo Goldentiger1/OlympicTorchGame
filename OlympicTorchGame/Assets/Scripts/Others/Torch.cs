@@ -204,8 +204,13 @@ public class Torch : MonoBehaviour
             {
                 Debug.DrawLine(origin, FirePoint.transform.position, Color.red);
 
-                if(hit.collider != null)
-                print(hit.collider.name);
+                torchFlameEffect.transform.rotation = Quaternion.Euler(Vector3.zero);
+
+                if (hit.collider != null)
+                {
+                    //print(hit.collider.name);
+
+                }
             } 
             else
             {
