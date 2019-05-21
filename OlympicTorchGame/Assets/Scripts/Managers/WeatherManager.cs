@@ -177,7 +177,7 @@ public class WeatherManager : Singelton<WeatherManager>
 
     private void ModifyWindDirection()
     {
-        CurrentWindDirection = WindSource.transform.position - WindSource.transform.forward;
+        CurrentWindDirection = WindSource.transform.position;
         shapeModule.rotation = CurrentWindDirection;
     }
 
@@ -191,7 +191,7 @@ public class WeatherManager : Singelton<WeatherManager>
             var rot = Quaternion.Euler(0, noise * 180, 0);
             WindSource.transform.localPosition = rot * v;
 
-            //WindSource.transform.LookAt(Vector3.zero);
+            WindSource.transform.rotation = Quaternion.LookRotation(WindSource.transform.position - WindSource.transform.forward);
 
             ModifyWindDirection();
 
