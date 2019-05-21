@@ -1680,7 +1680,7 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: 2756b680495bd1e439c4199f95e144be, type: 2}
+      objectReference: {fileID: 2100000, guid: 86da5d52de8fe2f44a56a77b5e00a2a4, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 76a09ec145a156644867c422a6351a29, type: 3}
 --- !u!4 &1205395772 stripped
@@ -2345,14 +2345,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4ac88c6c2ff7acd41bda41620979201b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ShowGizmos: 1
   WeatherState: 3
-  ShowWindPoints: 1
   WindPoints:
   - {x: 4, y: 0, z: 0}
   - {x: -4, y: 0, z: 0}
   - {x: 0, y: 0, z: 4}
   - {x: 0, y: 0, z: -4}
-  CurrentWindDirection: {fileID: 0}
   Rain_light: {fileID: 8300000, guid: c980eda1ec9b9ff4b930005976b00f41, type: 3}
   Rain_medium: {fileID: 8300000, guid: 3359e9d10af08ca46ae396298dbd1ed9, type: 3}
   Rain_heavy: {fileID: 8300000, guid: db1471092e49b7445bfbd374a17ea61a, type: 3}
