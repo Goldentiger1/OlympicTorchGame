@@ -82,15 +82,15 @@ public class Torch : MonoBehaviour
             // FirePoint layer index
             case 11:
 
-                if (GameManager.Instance.OlympicFlameStarted)
-                    return;
+            if (GameManager.Instance.OlympicFlameStarted)
+                return;
 
-                if (GameManager.Instance.TimeToStartFire)
-                {
-                    StartFire(other.bounds.center, IgniteCauldronDuration);
-                }
+            if (GameManager.Instance.TimeToStartFire)
+            {
+                StartFire(other.bounds.center, IgniteCauldronDuration);
+            }
 
-                break;
+            break;
 
             // Hand layer index
             case 14:
@@ -114,14 +114,16 @@ public class Torch : MonoBehaviour
             // FirePoint layer index
             case 11:
 
-                if (GameManager.Instance.OlympicFlameStarted)
-                    return;
+            if (GameManager.Instance.OlympicFlameStarted)
+                return;
 
-                if (GameManager.Instance.TimeToStartFire)
-                {
-                    startingFire = false;
-                    FireCounterImage.enabled = false;
-                }
+            if (GameManager.Instance.TimeToStartFire)
+            {
+                startingFire = false;
+                FireCounterImage.enabled = false;
+
+                GameManager.Instance.OlympicCauldron.HideHint();
+            }
 
                 break;
 
@@ -261,7 +263,7 @@ public class Torch : MonoBehaviour
             {
                 FireCounterImage.fillAmount = 0f;
 
-                yield return new WaitUntil(() => SpawnFireEffect(ResourceManager.Instance.BigFireEffectPrefab, position, GameManager.Instance.OlympicCauldron));
+                yield return new WaitUntil(() => SpawnFireEffect(ResourceManager.Instance.BigFireEffectPrefab, position, GameManager.Instance.OlympicCauldron.transform));
 
                 GameManager.Instance.OlympicFlameStarted = true;
 

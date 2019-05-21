@@ -12,7 +12,7 @@ public class GameManager : Singelton<GameManager>
     public bool TimeToStartFire = false;
 
     [Header("References")]
-    public Transform OlympicCauldron;
+    public OlympicCauldron OlympicCauldron;
 
     [Header("Audio")]
     public AudioClip Victory;
@@ -100,9 +100,9 @@ public class GameManager : Singelton<GameManager>
         if (gameIsCreated == false)
         {
             // Player
-            var playerPrefab = ResourceManager.Instance.PlayerPrefab;
-            var player = Instantiate(playerPrefab, transform);
-            player.name = playerPrefab.name;
+            //var playerPrefab = ResourceManager.Instance.PlayerPrefab;
+            //var player = Instantiate(playerPrefab);
+            //player.name = playerPrefab.name;
 
             // Bubi
             var bubiPrefab = ResourceManager.Instance.BubiPrefab;
@@ -153,7 +153,8 @@ public class GameManager : Singelton<GameManager>
 
                 UIManager.Instance.GameTimeText = "START FIRE";
 
-                AudioSource.PlayClipAtPoint(Fanfare, PlayerEngine.Instance.feetPositionGuess + Vector3.up);
+                OlympicCauldron.ShowHint();
+                AudioSource.PlayClipAtPoint(Fanfare, OlympicCauldron.transform.position);
 
                 yield return new WaitUntil(() => OlympicFlameStarted);
 
@@ -166,6 +167,8 @@ public class GameManager : Singelton<GameManager>
 
     private IEnumerator IEnd()
     {
+        OlympicCauldron.HideHint();
+
         WeatherManager.Instance.ChangeWeatherState(WEATHER_STATE.NONE);
 
         UIManager.Instance.GameTimeText = OlympicFlameStarted ? "VICTORY!" : "GAME OVER!";
