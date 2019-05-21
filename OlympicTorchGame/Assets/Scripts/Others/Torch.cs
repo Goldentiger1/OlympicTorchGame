@@ -8,9 +8,9 @@ public class Torch : MonoBehaviour
 
     [Header("Variables")]
     [Range(0, 100)]
-    public BoxCollider CoverZones;
     public float FlameStrenght = 100f;
     public float FireStartDuration = 6f;
+    public LayerMask HandCoverMask;
     private float currentFireStartDuration;
     private float startFlameStrenght;
 
@@ -152,6 +152,20 @@ public class Torch : MonoBehaviour
 
         while (IsBurning)
         {
+            Ray ray = new Ray(flamingPart.position, WeatherManager.Instance.WindSource.transform.position);
+            if(Physics.Raycast(ray, out RaycastHit hit, HandCoverMask))
+            {
+                Debug.DrawLine(flamingPart.position, WeatherManager.Instance.WindSource.transform.position, Color.red);
+            } 
+            else
+            {
+                Debug.LogWarning("!!!!");
+                Debug.DrawLine(flamingPart.position, WeatherManager.Instance.WindSource.transform.position, Color.white);
+            }
+                         
+
+            Debug.DrawLine(flamingPart.position, WeatherManager.Instance.WindSource.transform.position, Color.red);
+
             FlameStrenght -= Time.deltaTime;
 
             ratio = FlameStrenght / startFlameStrenght;
