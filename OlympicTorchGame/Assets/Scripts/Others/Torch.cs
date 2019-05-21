@@ -163,7 +163,6 @@ public class Torch : MonoBehaviour
                 Debug.DrawLine(flamingPart.position, WeatherManager.Instance.WindSource.transform.position, Color.white);
             }
                          
-
             Debug.DrawLine(flamingPart.position, WeatherManager.Instance.WindSource.transform.position, Color.red);
 
             FlameStrenght -= Time.deltaTime;
