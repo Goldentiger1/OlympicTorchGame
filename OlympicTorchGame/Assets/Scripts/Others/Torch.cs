@@ -6,8 +6,6 @@ public class Torch : MonoBehaviour
 {
     #region VARIABLES
 
-    public AudioClip TestClip;
-
     [Header("Variables")]
     [Range(0, 100)]
     public float FlameStrenght = 100f;
@@ -199,17 +197,9 @@ public class Torch : MonoBehaviour
 
             ray.origin = origin;
             ray.direction = direction;
-
-
-            //Debug.DrawRay(ray.origin, ray.direction * RayMaDistance, Color.blue);
-
-            // !!!
+           
             if (Physics.Raycast(origin, direction, out hit, RayMaDistance, HitLayerMask) && IsHandInsideFire == false)
             {
-                if(TestClip != null)
-                AudioSource.PlayClipAtPoint(TestClip, transform.position);
-
-
                 Debug.DrawLine(origin, FirePoint.transform.position, Color.red);
 
                 torchFlameEffect.transform.rotation = Quaternion.Euler(Vector3.zero);
