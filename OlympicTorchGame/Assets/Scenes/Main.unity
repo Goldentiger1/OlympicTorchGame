@@ -732,6 +732,12 @@ Transform:
   m_Father: {fileID: 2050016314}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &351126016 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 8249666943421101939, guid: d89182a6fa9d45340ab825b87eda2561,
+    type: 3}
+  m_PrefabInstance: {fileID: 1252528079}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &652972155
 GameObject:
   m_ObjectHideFlags: 0
@@ -1456,7 +1462,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 719ff1c728e04fd4ea20bc00b1ebf45e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  LevelTime: 3
+  LevelTime: 1000
   OlympicFlameStarted: 0
   TimeToStartFire: 0
   OlympicCauldron: {fileID: 940209892}
@@ -1676,7 +1682,28 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    - target: {fileID: 8249666943420753957, guid: d89182a6fa9d45340ab825b87eda2561,
+        type: 3}
+      propertyPath: m_Layer
+      value: 14
+      objectReference: {fileID: 0}
+    - target: {fileID: 8249666943409353807, guid: d89182a6fa9d45340ab825b87eda2561,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8249666943411048169, guid: d89182a6fa9d45340ab825b87eda2561,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8249666943411048169, guid: d89182a6fa9d45340ab825b87eda2561,
+        type: 3}
+      propertyPath: head
+      value: 
+      objectReference: {fileID: 351126016}
+    m_RemovedComponents:
+    - {fileID: 7888142605028727301, guid: d89182a6fa9d45340ab825b87eda2561, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: d89182a6fa9d45340ab825b87eda2561, type: 3}
 --- !u!1 &1323500934
 GameObject:
