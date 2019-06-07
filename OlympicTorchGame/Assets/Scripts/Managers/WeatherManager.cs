@@ -49,7 +49,7 @@ public class WeatherManager : Singelton<WeatherManager>
 
     private void Start()
     {
-        StartCoroutine(IStartWind());
+
     }
 
     private void Update()
@@ -139,6 +139,9 @@ public class WeatherManager : Singelton<WeatherManager>
     public void StartWeather()
     {
         ChangeWeatherState(WeatherState);
+
+        StartCoroutine(IStartWind());
+
     }
 
     private void StopRain()

@@ -8,6 +8,7 @@ public class Torch : MonoBehaviour
 
     [Header("Variables")]
     [Range(0, 100)]
+    public bool ShowDebugRay;
     public float FlameStrenght = 100f;
     public float BurnRateMultiplier = 4f;
     public float IgniteCauldronDuration = 6f;
@@ -29,6 +30,8 @@ public class Torch : MonoBehaviour
     private Coroutine iStartLifeTime, iStartFire;
 
     private bool startingFire;
+
+    private LineRenderer lineRenderer;
 
     #endregion VARIABLES
 
@@ -61,6 +64,7 @@ public class Torch : MonoBehaviour
     private void Awake()
     {
         FirePoint = transform.Find("FirePoint");
+        lineRenderer = GetComponent<LineRenderer>();
     }
 
     private void Start()
@@ -200,7 +204,7 @@ public class Torch : MonoBehaviour
            
             if (Physics.Raycast(origin, direction, out hit, RayMaDistance, HitLayerMask) && IsHandInsideFire == false)
             {
-                Debug.DrawLine(origin, FirePoint.transform.position, Color.red);
+                DebugWindDirection(origin, Color.white, ShowDebugRay);
 
                 torchFlameEffect.transform.rotation = Quaternion.Euler(Vector3.zero);
 
@@ -221,15 +225,10 @@ public class Torch : MonoBehaviour
 
                 FlameStrenght -= Time.deltaTime * BurnRateMultiplier;
 
-                Debug.DrawLine(origin, FirePoint.transform.position, Color.white);
+                DebugWindDirection(origin, Color.red, ShowDebugRay);
 
                 torchFlameEffect.transform.rotation = Quaternion.LookRotation(WeatherManager.Instance.WindSource.transform.forward);
             }
-
-            
-
-            // Debug.DrawRay(ray.origin, ray.direction * RayMaDistance, isEffeecting ? Color.red : Color.white);
-
 
             yield return null;
         }
@@ -239,6 +238,17 @@ public class Torch : MonoBehaviour
         GameManager.Instance.ChangeGameState(GAME_STATE.END);
 
         iStartLifeTime = null;
+    }
+
+    private void DebugWindDirection(Vector3 origin, Color lineColor, bool showDebugRay)
+    {
+        if (showDebugRay)
+            Debug.DrawLine(origin, FirePoint.transform.position, lineColor);
+
+        lineRenderer.SetPosition(0, origin);
+        lineRenderer.SetPosition(1, FirePoint.transform.position);
+        lineRenderer.startColor = lineColor;
+        lineRenderer.endColor = lineColor;
     }
 
     private IEnumerator IStartFire(Vector3 position, float duration)

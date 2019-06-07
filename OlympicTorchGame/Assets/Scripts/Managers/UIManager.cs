@@ -72,7 +72,7 @@ public class UIManager : Singelton<UIManager>
 
     private IEnumerator Start()
     {
-        yield return new WaitUntil(() => GameManager.Instance.CurrentGameState.Equals(GAME_STATE.RUN)); ;
+        yield return new WaitUntil(() => GameManager.Instance.CurrentGameState.Equals(GAME_STATE.RUN));
 
         ShowHUD(HudStartPosition, 1f, GameManager.Instance.StartLevelTime);
     }

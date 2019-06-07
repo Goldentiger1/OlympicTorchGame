@@ -8,6 +8,7 @@ public class GameManager : Singelton<GameManager>
 
     [Header("Variables")]
     public float LevelTime = 60f;
+    public float LevelStartDelay = 4f;
     public bool OlympicFlameStarted;
     public bool TimeToStartFire = false;
 
@@ -18,6 +19,7 @@ public class GameManager : Singelton<GameManager>
     public AudioClip Victory;
     public AudioClip Lose;
     public AudioClip Fanfare;
+    public AudioClip StartLevel;
 
     private bool gameIsCreated;
 
@@ -109,16 +111,14 @@ public class GameManager : Singelton<GameManager>
             var bubi = Instantiate(bubiPrefab, transform);
             bubi.name = bubiPrefab.name;
 
-            // Torch
-            var torchPrefab = ResourceManager.Instance.TorchPrefab;
-            var torch = Instantiate(
-                torchPrefab,
-                PlayerEngine.Instance.feetPositionGuess + Vector3.forward,
-                Quaternion.identity,
-                transform);
-            torch.name = torchPrefab.name;
-
-            WeatherManager.Instance.StartWeather();
+            //// Torch
+            //var torchPrefab = ResourceManager.Instance.TorchPrefab;
+            //var torch = Instantiate(
+            //    torchPrefab,
+            //    PlayerEngine.Instance.feetPositionGuess + Vector3.forward,
+            //    Quaternion.identity,
+            //    transform);
+            //torch.name = torchPrefab.name;
         }
 
         return gameIsCreated = true;
@@ -128,6 +128,15 @@ public class GameManager : Singelton<GameManager>
     {
         OlympicFlameStarted = false;
         TimeToStartFire = false;
+
+        yield return new WaitForSeconds(LevelStartDelay);
+
+        WeatherManager.Instance.StartWeather();
+
+        if (StartLevel != null)
+        {
+            AudioSource.PlayClipAtPoint(StartLevel, PlayerEngine.Instance.feetPositionGuess);
+        }
 
         LevelTime = StartLevelTime;
         UIManager.Instance.GameTimeText = "STARTING...";
