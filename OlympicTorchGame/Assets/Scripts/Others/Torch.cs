@@ -210,7 +210,7 @@ public class Torch : MonoBehaviour
 
                 if (hit.collider != null)
                 {
-                    print(hit.collider.name);
+                    //print(hit.collider.name);
 
 
                 }

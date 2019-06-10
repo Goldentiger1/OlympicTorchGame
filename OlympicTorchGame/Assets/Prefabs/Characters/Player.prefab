@@ -267,7 +267,7 @@ GameObject:
   - component: {fileID: 8249666943409353807}
   - component: {fileID: 8249666943411048169}
   - component: {fileID: 8249666943417649239}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: BodyCollider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -297,7 +297,7 @@ CapsuleCollider:
   m_GameObject: {fileID: 8249666943420753957}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 0
+  m_Enabled: 1
   m_Radius: 0.25
   m_Height: 1.5
   m_Direction: 1
@@ -309,12 +309,12 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8249666943420753957}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1731d642c0b250b48bb8cdfb153d9792, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  head: {fileID: 0}
+  head: {fileID: 8249666943421101939}
 --- !u!54 &8249666943417649239
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1200,7 +1200,6 @@ GameObject:
   - component: {fileID: 8249666943422648157}
   - component: {fileID: 8249666943411132679}
   - component: {fileID: 6873971058524136202}
-  - component: {fileID: 5756774066660564383}
   m_Layer: 16
   m_Name: FallbackObjects
   m_TagString: MainCamera
@@ -1340,19 +1339,6 @@ MonoBehaviour:
   m_BeforeTransparentBundles: []
   m_BeforeStackBundles: []
   m_AfterStackBundles: []
---- !u!65 &5756774066660564383
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8249666943420937637}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 0.51454663, y: 1.8307695, z: 0.3329985}
-  m_Center: {x: 0.0039721727, y: -0.8624382, z: -0.14528671}
 --- !u!1 &8249666943420939221
 GameObject:
   m_ObjectHideFlags: 0
@@ -1464,7 +1450,6 @@ GameObject:
   - component: {fileID: 8249666943411043655}
   - component: {fileID: 8249666943412295621}
   - component: {fileID: 1051565187}
-  - component: {fileID: 7888142605028727301}
   m_Layer: 10
   m_Name: VRCamera
   m_TagString: MainCamera
@@ -1609,19 +1594,6 @@ MonoBehaviour:
   m_BeforeTransparentBundles: []
   m_BeforeStackBundles: []
   m_AfterStackBundles: []
---- !u!65 &7888142605028727301
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8249666943420950997}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 0.51454663, y: 1.8307695, z: 0.3329985}
-  m_Center: {x: 0.0039721727, y: -0.8624382, z: -0.14528671}
 --- !u!1 &8249666943420953143
 GameObject:
   m_ObjectHideFlags: 0

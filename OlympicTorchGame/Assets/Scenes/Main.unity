@@ -132,7 +132,7 @@ GameObject:
   - component: {fileID: 26708374}
   - component: {fileID: 26708373}
   - component: {fileID: 26708372}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: BackCollider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -164,6 +164,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 23bcc019832927e4faa1eb55cc0002ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Offset: {x: 0.5, y: 1, z: 0}
+  SmoothMultiplier: 0.2
 --- !u!4 &26708374
 Transform:
   m_ObjectHideFlags: 0
@@ -172,7 +174,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 26708371}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -242,7 +244,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 54c8e2eb1f9ae74488d80258351c1948, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Offset: {x: 0, y: 0, z: 0}
+  Offset: {x: 0, y: 1, z: 0}
   SmoothMultiplier: 0.2
 --- !u!4 &73633465 stripped
 Transform:
