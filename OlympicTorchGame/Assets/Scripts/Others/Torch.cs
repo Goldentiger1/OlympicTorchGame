@@ -210,7 +210,7 @@ public class Torch : MonoBehaviour
 
                 if (hit.collider != null)
                 {
-                    //print(hit.collider.name);
+                    print(hit.collider.name);
 
 
                 }
@@ -245,10 +245,10 @@ public class Torch : MonoBehaviour
         if (showDebugRay)
             Debug.DrawLine(origin, FirePoint.transform.position, lineColor);
 
-        lineRenderer.SetPosition(0, origin);
-        lineRenderer.SetPosition(1, FirePoint.transform.position);
-        lineRenderer.startColor = lineColor;
-        lineRenderer.endColor = lineColor;
+        //lineRenderer.SetPosition(0, origin);
+        //lineRenderer.SetPosition(1, FirePoint.transform.position);
+        //lineRenderer.startColor = lineColor;
+        //lineRenderer.endColor = lineColor;
     }
 
     private IEnumerator IStartFire(Vector3 position, float duration)

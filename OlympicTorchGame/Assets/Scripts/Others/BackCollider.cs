@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class BackCollider : MonoBehaviour
 {
-    [Header("HUD Panel Variables")]
+    [Header("Variables")]
     public Vector3 Offset;
     public float SmoothMultiplier;
 

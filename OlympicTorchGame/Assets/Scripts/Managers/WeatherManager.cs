@@ -9,10 +9,6 @@ public class WeatherManager : Singelton<WeatherManager>
     public bool ShowGizmos = true;
     public WEATHER_STATE WeatherState;
 
-    Vector3 origin;
-    Vector3 direction;
-    Ray ray = new Ray();
-
     [Header("Wind")]
     public float Radius;
     public float Frequency = 1;

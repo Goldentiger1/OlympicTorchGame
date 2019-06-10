@@ -161,7 +161,7 @@ public class UIManager : Singelton<UIManager>
         yield return new WaitForSeconds(showDelay);
 
         HUDCanvas.position = startPosition;
-        HUDCanvas.gameObject.SetActive(true);
+        //HUDCanvas.gameObject.SetActive(true);
 
         StartCoroutine(IUpdateHUDMotion());
 
