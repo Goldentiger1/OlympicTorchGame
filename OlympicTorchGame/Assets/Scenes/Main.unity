@@ -1515,7 +1515,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 719ff1c728e04fd4ea20bc00b1ebf45e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  LevelTime: 26
+  LevelTime: 30
   LevelStartDelay: 4
   OlympicFlameStarted: 0
   TimeToStartFire: 0
